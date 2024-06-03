@@ -1,9 +1,9 @@
 {
   "current": {
     "logo_width": 90,
-    "type_header_font": "assistant_n4",
+    "type_header_font": "americana_n4",
     "heading_scale": 100,
-    "type_body_font": "assistant_n4",
+    "type_body_font": "americana_n4",
     "body_scale": 100,
     "page_width": 1200,
     "spacing_sections": 0,
@@ -187,10 +187,21 @@
       "scheme-55641035-6d04-41ed-92cd-63bba70f1366": {
         "settings": {
           "background": "#f5e7d7",
-          "background_gradient": "linear-gradient(180deg, rgba(245, 231, 215, 1), rgba(249, 32, 32, 1) 100%)",
+          "background_gradient": "",
           "text": "#121212",
           "button": "#121212",
           "button_label": "#ffffff",
+          "secondary_button_label": "#121212",
+          "shadow": "#121212"
+        }
+      },
+      "scheme-40f381fe-a5dd-4436-b09e-c6be41353a50": {
+        "settings": {
+          "background": "#752329",
+          "background_gradient": "",
+          "text": "#f5e7d7",
+          "button": "#f5e7d7",
+          "button_label": "#752329",
           "secondary_button_label": "#121212",
           "shadow": "#121212"
         }
