@@ -101,7 +101,7 @@
         --font-body-weight: {{ settings.type_body_font.weight }};
         --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
 
-        --font-heading-family: {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+        --font-heading-family: 'El Messiri', {{ settings.type_header_font.fallback_families }};
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
 
@@ -242,6 +242,13 @@
         font-family: var(--font-body-family);
         font-style: var(--font-body-style);
         font-weight: var(--font-body-weight);
+      }
+
+      @font-face {
+        font-family: 'El Messiri';
+        font-style: normal;
+        font-weight: 400;
+        src: url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap') format('woff2');
       }
 
       @media screen and (min-width: 750px) {
