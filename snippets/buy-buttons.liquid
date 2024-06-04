@@ -74,7 +74,7 @@
             if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
               assign quantity_rule_soldout = true
             endif
-          -%}
+          -%}cart__checkout-button
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
