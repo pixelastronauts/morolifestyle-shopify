@@ -554,6 +554,14 @@ video {
   --tw-contain-style:  ;
 }
 
+.twcss-inline-flex {
+  display: inline-flex;
+}
+
+.\!twcss-inline-flex {
+  display: inline-flex !important;
+}
+
 .twcss-w-4 {
   width: 1rem;
 }
@@ -564,6 +572,10 @@ video {
 
 .twcss-flex-none {
   flex: none;
+}
+
+.twcss-items-center {
+  align-items: center;
 }
 
 .twcss-gap-2 {

@@ -138,7 +138,7 @@
         "image-with-text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>All onze producten worden gemaakt in Marokko<\/p>",
+            "text": "<p>Onze producten worden met de hand gemaakt in Marokko. We zorgen ervoor dat we weten waar alles vandaan komt en betalen een eerlijke prijs. Elk item in onze webshop vertelt een uniek verhaal van vakmanschap en traditie, zodat jij iets bijzonders en authentieks krijgt.<\/p>",
             "text_style": "body"
           }
         }
@@ -148,14 +148,15 @@
         "image-with-text-1"
       ],
       "settings": {
-        "height": "small",
+        "image": "shopify:\/\/shop_images\/Fringe-hanglamp-1.jpg",
+        "height": "medium",
         "desktop_image_width": "medium",
         "layout": "text_first",
-        "desktop_content_position": "top",
+        "desktop_content_position": "middle",
         "desktop_content_alignment": "left",
         "content_layout": "no-overlap",
-        "section_color_scheme": "",
-        "color_scheme": "scheme-2",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-55641035-6d04-41ed-92cd-63bba70f1366",
         "image_behavior": "none",
         "mobile_content_alignment": "left",
         "padding_top": 36,

@@ -392,12 +392,17 @@
   }
 }
 
+/* gradient */
 .banner::after,
 .banner__media::after {
   content: '';
   position: absolute;
   top: 0;
-  background: #000000;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
   opacity: 0;
   z-index: 1;
   width: 100%;

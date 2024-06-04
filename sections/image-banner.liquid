@@ -119,16 +119,13 @@
                   {% else %}
                   href="{{ block.settings.button_link_1 }}"
                   {% endif %}
-                  class="twcss-gap-2 twcss-group twcss-px-2 button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}">
-                  <span class="twcss-flex-none twcss-w-4 icon-moro twcss-duration-800 twcss-ease-out-expo group-hover:twcss-rotate-180 twcss-transition-all">
-                    {% render 'icon-moro' %}
-                  </span>
+                  class="twcss-gap-4 twcss-group twcss-px-2 button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}">
+                  {% render 'icon-moro-span' %}
                   <div class="twcss-flex-none">
                     {{- block.settings.button_label_1 | escape -}}
                   </div>
-                  <span class="twcss-flex-none twcss-w-4 icon-moro twcss-duration-800 twcss-ease-out-expo group-hover:-twcss-rotate-180 twcss-transition-all">
-                    {% render 'icon-moro' %}
-                  </span>
+                  {% render 'icon-moro-span'
+                    , counterwise: true %}
                 </a>
               {%- endif -%}
               {%- if block.settings.button_label_2 != blank -%}

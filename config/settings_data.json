@@ -6,7 +6,7 @@
     "heading_scale": 100,
     "type_body_font": "poppins_n4",
     "body_scale": 100,
-    "page_width": 1200,
+    "page_width": 1600,
     "spacing_sections": 0,
     "spacing_grid_horizontal": 8,
     "spacing_grid_vertical": 8,
@@ -187,7 +187,7 @@
       },
       "scheme-55641035-6d04-41ed-92cd-63bba70f1366": {
         "settings": {
-          "background": "#f5e7d7",
+          "background": "#eae5df",
           "background_gradient": "",
           "text": "#121212",
           "button": "#121212",
