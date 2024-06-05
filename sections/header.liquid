@@ -72,13 +72,23 @@
     }
 
     .header__heading-logo-wrapper .icon-moro {
-      transition: opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+      transition: opacity .8s cubic-bezier(0.19, 1, 0.22, 1), transform .8s cubic-bezier(0.19, 1, 0.22, 1);
       opacity: 0;
+    }
+
+    .scrolled-past-header .header__heading-logo-wrapper .icon-moro:first-of-type {
+      transform: translateX(-8px) rotate(-360deg);
+    }
+
+    .scrolled-past-header .header__heading-logo-wrapper .icon-moro:last-of-type {
+      transform: translateX(8px) rotate(360deg);
     }
 
     .scrolled-past-header .icon-moro {
       opacity: 1;
-      transition-delay: 800ms;
+      transform: translateX(0) rotate(0deg);
+      transition-duration: 1.4s;
+      transition-delay: 400ms;
     }
   {%- endif -%}
 
@@ -284,7 +294,7 @@
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
         {%- if settings.logo != blank -%}
-          <div class="header__heading-logo-wrapper twcss-text-moro-500 !twcss-inline-flex twcss-items-center twcss-gap-4">
+          <div class="header__heading-logo-wrapper twcss-text-moro-500 !twcss-inline-flex twcss-items-center twcss-gap-2">
             {% render 'icon-moro-span' %}
             {% render 'logo' %}
             {% render 'icon-moro-span' %}
@@ -363,15 +373,16 @@
         href="{{ routes.cart_url }}"
         class="header__icon header__icon--cart link focus-inset"
         id="cart-icon-bubble">
-        {%- liquid
+        {% comment %} {%- liquid
           if cart == empty
-            render 'icon-cart-empty'
+            render 'icon-cart'
           else
             render 'icon-cart'
           endif
-        -%}
+        -%} {% endcomment %}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-        {%- if cart != empty -%}
+        {%- if cart == empty -%}
+        {% else %}
           <div class="cart-count-bubble">
             {%- if cart.item_count < 100 -%}
               <span aria-hidden="true">{{ cart.item_count }}</span>

@@ -17,11 +17,11 @@
         "announcement-bar-0"
       ],
       "settings": {
-        "color_scheme": "scheme-40f381fe-a5dd-4436-b09e-c6be41353a50",
-        "show_line_separator": true,
+        "color_scheme": "scheme-55641035-6d04-41ed-92cd-63bba70f1366",
+        "show_line_separator": false,
         "show_social": false,
-        "auto_rotate": false,
-        "change_slides_speed": 5,
+        "auto_rotate": true,
+        "change_slides_speed": 3,
         "enable_country_selector": false,
         "enable_language_selector": false
       }
@@ -40,8 +40,8 @@
         "enable_language_selector": true,
         "mobile_logo_position": "center",
         "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     }
   },
