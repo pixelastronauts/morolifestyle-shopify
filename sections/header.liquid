@@ -373,13 +373,13 @@
         href="{{ routes.cart_url }}"
         class="header__icon header__icon--cart link focus-inset"
         id="cart-icon-bubble">
-        {% comment %} {%- liquid
+        {%- liquid
           if cart == empty
             render 'icon-cart'
           else
             render 'icon-cart'
           endif
-        -%} {% endcomment %}
+        -%}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart == empty -%}
         {% else %}
