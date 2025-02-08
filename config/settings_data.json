@@ -151,15 +151,6 @@
         "type": "shopify://apps/live-product-options/blocks/app-embed/88bfdf40-5e27-4962-a966-70c8d1e87757",
         "disabled": false,
         "settings": {}
-      },
-      "13838957897197465948": {
-        "type": "shopify://apps/ms-custom-sizeprice-calculator/blocks/msprice_new_theme/a5adc090-90be-4030-ba4f-81eeb73e84d3",
-        "disabled": false,
-        "settings": {
-          "cpn_filed_button_text": "Apply",
-          "cpn_filed_css": "background-color: black; \ncolor: white;\nfont-size: 14px;",
-          "cpn_filed_button_bg_hover_color": "background-color: red;\ncolor: green;"
-        }
       }
     },
     "color_schemes": {

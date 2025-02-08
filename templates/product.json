@@ -45,11 +45,9 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "live_product_options_app_block_BYbydF": {
-          "type": "shopify://apps/live-product-options/blocks/app-block/88bfdf40-5e27-4962-a966-70c8d1e87757",
-          "settings": {
-            "product": "{{product}}"
-          }
+        "easify_options_easify_product_options_mYpULA": {
+          "type": "shopify://apps/easify-options/blocks/easify-product-options/d2288b18-c1ba-42f5-b3b3-26c75c8820bf",
+          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -120,7 +118,7 @@
         "price",
         "variant_picker",
         "quantity_selector",
-        "live_product_options_app_block_BYbydF",
+        "easify_options_easify_product_options_mYpULA",
         "buy_buttons",
         "description",
         "inventory_qnngpg",
