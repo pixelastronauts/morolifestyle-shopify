@@ -83,6 +83,51 @@
             , section: section -%}
         {%- endif -%}
 
+        <area-calculator data-base-price="{{ product.price }}" class="twcss-flex twcss-flex-col twcss-gap-4 twcss-mb-4">
+          <div class="twcss-grid twcss-grid-cols-2 twcss-gap-4">
+            <div class="twcss-flex twcss-flex-col twcss-gap-1">
+              <label class="twcss-text-sm twcss-font-medium twcss-text-gray-700">Horizontaal</label>
+              <div class="twcss-flex twcss-flex-col twcss-gap-1">
+                <div class="twcss-relative">
+                  <input
+                    type="number"
+                    data-width-input
+                    min="28"
+                    max="250"
+                    placeholder="0"
+                    class="twcss-w-full twcss-px-4 twcss-py-2 twcss-border twcss-border-gray-300 twcss-rounded-md twcss-shadow-sm focus:twcss-ring-1 focus:twcss-ring-moro-500 focus:twcss-border-moro-500 twcss-pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:twcss-appearance-none [&::-webkit-inner-spin-button]:twcss-appearance-none">
+                  <span class="twcss-absolute twcss-right-4 twcss-top-1/2 twcss-transform twcss--translate-y-1/2 twcss-text-gray-500">cm</span>
+                </div>
+                <span data-width-error class="twcss-text-red-500 twcss-text-sm"></span>
+              </div>
+            </div>
+            <div class="twcss-flex twcss-flex-col twcss-gap-1">
+              <label class="twcss-text-sm twcss-font-medium twcss-text-gray-700">Verticaal</label>
+              <div class="twcss-flex twcss-flex-col twcss-gap-1">
+                <div class="twcss-relative">
+                  <input
+                    type="number"
+                    data-length-input
+                    min="28"
+                    max="250"
+                    placeholder="0"
+                    class="twcss-w-full twcss-px-4 twcss-py-2 twcss-border twcss-border-gray-300 twcss-rounded-md twcss-shadow-sm focus:twcss-ring-1 focus:twcss-ring-moro-500 focus:twcss-border-moro-500 twcss-pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:twcss-appearance-none [&::-webkit-inner-spin-button]:twcss-appearance-none">
+                  <span class="twcss-absolute twcss-right-4 twcss-top-1/2 twcss-transform twcss--translate-y-1/2 twcss-text-gray-500">cm</span>
+                </div>
+                <span data-length-error class="twcss-text-red-500 twcss-text-sm"></span>
+              </div>
+            </div>
+          </div>
+          <div class="twcss-text-lg twcss-font-medium">
+            Total Price:
+            <span data-total-price class="twcss-ml-2">0</span>
+          </div>
+          <div
+            data-error-message
+            class="twcss-text-red-600 twcss-text-sm"
+            style="display: none;"></div>
+        </area-calculator>
+
         <div class="product-form__buttons">
           {%- liquid
             assign check_against_inventory = true
