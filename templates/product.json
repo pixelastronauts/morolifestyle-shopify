@@ -21,8 +21,7 @@
         },
         "title": {
           "type": "title",
-          "settings": {
-          }
+          "settings": {}
         },
         "caption": {
           "type": "text",
@@ -33,8 +32,7 @@
         },
         "price": {
           "type": "price",
-          "settings": {
-          }
+          "settings": {}
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -45,7 +43,12 @@
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "settings": {}
+        },
+        "live_product_options_app_block_BYbydF": {
+          "type": "shopify://apps/live-product-options/blocks/app-block/88bfdf40-5e27-4962-a966-70c8d1e87757",
           "settings": {
+            "product": "{{product}}"
           }
         },
         "buy_buttons": {
@@ -57,8 +60,7 @@
         },
         "description": {
           "type": "description",
-          "settings": {
-          }
+          "settings": {}
         },
         "inventory_qnngpg": {
           "type": "inventory",
@@ -118,6 +120,7 @@
         "price",
         "variant_picker",
         "quantity_selector",
+        "live_product_options_app_block_BYbydF",
         "buy_buttons",
         "description",
         "inventory_qnngpg",
@@ -156,7 +159,7 @@
         "image-with-text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Onze producten worden met de hand gemaakt in Marokko. We zorgen ervoor dat we weten waar alles vandaan komt en betalen een eerlijke prijs. Elk item in onze webshop vertelt een uniek verhaal van vakmanschap en traditie, zodat jij iets bijzonders en authentieks krijgt.<\/p>",
+            "text": "<p>Onze producten worden met de hand gemaakt in Marokko. We zorgen ervoor dat we weten waar alles vandaan komt en betalen een eerlijke prijs. Elk item in onze webshop vertelt een uniek verhaal van vakmanschap en traditie, zodat jij iets bijzonders en authentieks krijgt.</p>",
             "text_style": "body"
           }
         }
@@ -166,7 +169,7 @@
         "image-with-text-1"
       ],
       "settings": {
-        "image": "shopify:\/\/shop_images\/Fringe-hanglamp-1.jpg",
+        "image": "shopify://shop_images/Fringe-hanglamp-1.jpg",
         "height": "medium",
         "desktop_image_width": "medium",
         "layout": "text_first",
@@ -188,7 +191,7 @@
           "type": "column",
           "settings": {
             "title": "Gratis verzenden",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
           }
@@ -197,7 +200,7 @@
           "type": "column",
           "settings": {
             "title": "Probleemloos retourneren",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "link_label": "",
             "link": ""
           }
