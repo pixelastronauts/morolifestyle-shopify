@@ -1,15 +1,6 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "current": {
-    "logo": "shopify://shop_images/MoroLifestyle_Logo.png",
+    "logo": "shopify:\/\/shop_images\/MoroLifestyle_Logo.png",
     "logo_width": 80,
     "type_header_font": "americana_n4",
     "heading_scale": 100,
@@ -105,7 +96,7 @@
     "sale_badge_color_scheme": "scheme-5",
     "sold_out_badge_color_scheme": "scheme-3",
     "social_facebook_link": "",
-    "social_instagram_link": "https://www.instagram.com/morostories",
+    "social_instagram_link": "https:\/\/www.instagram.com\/morostories",
     "social_youtube_link": "",
     "social_tiktok_link": "",
     "social_twitter_link": "",
@@ -133,23 +124,27 @@
         "settings": {
           "color_scheme": "scheme-1"
         }
+      },
+      "ms-smtprice-sec": {
+        "type": "ms-smtprice-sec",
+        "settings": {}
       }
     },
     "content_for_index": [],
     "blocks": {
       "6097499278999377719": {
-        "type": "shopify://apps/globo-mega-menu/blocks/app-embed/7a00835e-fe40-45a5-a615-2eb4ab697b58",
+        "type": "shopify:\/\/apps\/globo-mega-menu\/blocks\/app-embed\/7a00835e-fe40-45a5-a615-2eb4ab697b58",
         "disabled": true,
         "settings": {}
       },
       "15623156175785154009": {
-        "type": "shopify://apps/qikify-smart-menu-mega-menu/blocks/app-embed/19d2f1cd-1836-4a32-8937-03df3c601dc8",
+        "type": "shopify:\/\/apps\/qikify-smart-menu-mega-menu\/blocks\/app-embed\/19d2f1cd-1836-4a32-8937-03df3c601dc8",
         "disabled": true,
         "settings": {}
       },
-      "1787840288555608609": {
-        "type": "shopify://apps/live-product-options/blocks/app-embed/88bfdf40-5e27-4962-a966-70c8d1e87757",
-        "disabled": false,
+      "316487575649303945": {
+        "type": "shopify:\/\/apps\/easify-options\/blocks\/app-embed-block\/d2288b18-c1ba-42f5-b3b3-26c75c8820bf",
+        "disabled": true,
         "settings": {}
       }
     },

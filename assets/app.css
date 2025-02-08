@@ -641,10 +641,6 @@ video {
   display: grid;
 }
 
-.twcss-hidden {
-  display: none;
-}
-
 .twcss-w-4 {
   width: 1rem;
 }
@@ -765,14 +761,14 @@ video {
   color: rgb(117 35 41 / var(--tw-text-opacity));
 }
 
-.twcss-text-red-600 {
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
-}
-
 .twcss-text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.twcss-text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .twcss-opacity-50 {
