@@ -1524,7 +1524,7 @@ class VariantSelects extends HTMLElement {
     );
     if (!productForm) return;
     const addButton = productForm.querySelector('[name="add"]');
-    const addButtonText = productForm.querySelector('[name="add"] > span');
+    const addButtonText = productForm.querySelector('[name="add"] > span.add-to-cart-text');
     if (!addButton) return;
 
     if (disable) {
@@ -1543,7 +1543,7 @@ class VariantSelects extends HTMLElement {
       `product-form-${this.dataset.section}`,
     );
     const addButton = button.querySelector('[name="add"]');
-    const addButtonText = button.querySelector('[name="add"] > span');
+    const addButtonText = button.querySelector('[name="add"] > span.add-to-cart-text');
     const price = document.getElementById(`price-${this.dataset.section}`);
     const inventory = document.getElementById(
       `Inventory-${this.dataset.section}`,

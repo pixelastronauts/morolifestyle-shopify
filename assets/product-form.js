@@ -12,16 +12,67 @@ if (!customElements.get('product-form')) {
           document.querySelector('cart-notification') ||
           document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
+        this.areaCalculator = this.querySelector('area-calculator');
 
         if (document.querySelector('cart-drawer'))
           this.submitButton.setAttribute('aria-haspopup', 'dialog');
 
         this.hideErrors = this.dataset.hideErrors === 'true';
+
+        // Listen for successful variant addition from area calculator
+        if (this.areaCalculator) {
+          this.areaCalculator.addEventListener('variant:added', (event) => {
+            this.handleVariantAdded(event.detail);
+          });
+        }
+      }
+
+      handleVariantAdded(detail) {
+        // Handle successful add to cart from area calculator
+        if (!this.error && !this.cart) {
+          window.location = window.routes.cart_url;
+          return;
+        }
+
+        // Ensure we're using the numeric ID (it should already be converted by the area calculator)
+        const variantId = typeof detail.variant.id === 'string' && detail.variant.id.includes('gid://')
+          ? detail.variant.id.split('/').pop()
+          : detail.variant.id;
+
+        if (!this.error) {
+          publish(PUB_SUB_EVENTS.cartUpdate, {
+            source: 'product-form',
+            productVariantId: variantId,
+            cartData: detail.result
+          });
+        }
+
+        this.error = false;
+        const quickAddModal = this.closest('quick-add-modal');
+        if (quickAddModal) {
+          document.body.addEventListener(
+            'modalClosed',
+            () => {
+              setTimeout(() => {
+                this.cart.renderContents(detail.result);
+              });
+            },
+            { once: true },
+          );
+          quickAddModal.hide(true);
+        } else {
+          this.cart.renderContents(detail.result);
+        }
       }
 
       onSubmitHandler(evt) {
         evt.preventDefault();
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
+
+        // If area calculator is present, let it handle the submission
+        if (this.areaCalculator) {
+          return;
+        }
 
         this.handleErrorMessage();
 

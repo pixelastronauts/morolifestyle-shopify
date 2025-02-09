@@ -83,7 +83,12 @@
             , section: section -%}
         {%- endif -%}
 
-        <area-calculator data-base-price="{{ product.price }}" class="twcss-flex twcss-flex-col twcss-gap-4 twcss-mb-4">
+        <area-calculator
+          data-base-price="{{ product.price }}"
+          data-product-id="{{ product.id }}"
+          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+          data-domain="{{ shop.metafields.calculator.domain | default: 'https://price-calculator.test' }}"
+          class="twcss-flex twcss-flex-col twcss-gap-4 twcss-mb-4">
           <div class="twcss-grid twcss-grid-cols-2 twcss-gap-4">
             <div class="twcss-flex twcss-flex-col twcss-gap-1">
               <label class="twcss-text-sm twcss-font-medium twcss-text-gray-700">Horizontaal</label>
@@ -120,8 +125,8 @@
               </div>
             </div>
           </div>
-          <div class="twcss-text-lg twcss-font-medium">
-            Total Price:
+          <div class="twcss-text-3xl twcss-font-medium">
+            {{ 'products.product.total_price' | t }}:
             <span data-total-price class="twcss-ml-2">0</span>
           </div>
           <div
@@ -152,7 +157,7 @@
               {{ 'products.product.sold_out' | t }}
             {%- else -%}
               {% render 'icon-moro-span' %}
-              <span>
+              <span class="add-to-cart-text">
                 {{ 'products.product.add_to_cart' | t }}
               </span>
               {% render 'icon-moro-span'

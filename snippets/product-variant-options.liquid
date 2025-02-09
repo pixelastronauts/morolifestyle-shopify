@@ -26,7 +26,22 @@
 
 {%- for value in option.values -%}
   {%- liquid
+    if value contains 'CV_'
+      continue
+    endif
+
     assign option_disabled = true
+    assign is_selected = false
+
+    if option.selected_value == value
+      assign is_selected = true
+    elsif option.selected_value contains 'CV_'
+      assign parent_variant = value | downcase
+      assign selected_cv = option.selected_value | downcase | remove: 'cv_' | split: '_' | first
+      if parent_variant == selected_cv
+        assign is_selected = true
+      endif
+    endif
 
     for option1_name in variants_option1_arr
       case option.position
@@ -66,18 +81,12 @@
     </span>
   {%- endcapture -%}
   {%- if picker_type == 'swatch' -%}
-    {% liquid
-      assign checked = false
-      if option.selected_value == value
-        assign checked = true
-      endif
-    %}
     {%- capture help_text -%}
       <span class="visually-hidden">{{ value | escape }}</span>
       {{ label_unavailable }}
     {%- endcapture -%}
     {%
-      render 'swatch-input', id: input_id, name: option.name, value: value | escape, swatch: value.swatch, product_form_id: product_form_id, checked: checked, visually_disabled: option_disabled, shape: block.settings.swatch_shape, help_text: help_text
+      render 'swatch-input', id: input_id, name: option.name, value: value | escape, swatch: value.swatch, product_form_id: product_form_id, checked: is_selected, visually_disabled: option_disabled, shape: block.settings.swatch_shape, help_text: help_text
     %}
   {%- elsif picker_type == 'button' -%}
     <input
@@ -86,20 +95,33 @@
       name="{{ option.name }}"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      {% if option.selected_value == value %}
+      {% if is_selected %}
       checked
       {% endif %}
       {% if option_disabled %}
       class="disabled"
       {% endif %}>
-    <label for="{{ input_id }}">
-      {{ value -}}
+    <label
+      for="{{ input_id }}"
+      {% if option.name == 'Title' %}
+      class="variant-image-label"
+      {% endif %}>
+      {%- if option.name == 'Title' and product.variants[forloop.index0].image -%}
+        <img
+          src="{{ product.variants[forloop.index0].image | image_url: width: 50 }}"
+          alt="{{ value | escape }}"
+          width="50"
+          height="50"
+          loading="lazy">
+      {%- else -%}
+        <span class="variant-title">{{ value }}</span>
+      {%- endif -%}
       {{ label_unavailable }}
     </label>
   {%- elsif picker_type == 'dropdown' or picker_type == 'swatch_dropdown' -%}
     <option
       value="{{ value | escape }}"
-      {% if option.selected_value == value %}
+      {% if is_selected %}
       selected="selected"
       {% endif %}
       {% if swatch_value and picker_type == 'swatch_dropdown' %}

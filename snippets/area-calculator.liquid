@@ -1,0 +1,131 @@
+{% if block.settings.show_area_calculator %}
+  <div class="area-calculator-wrapper">
+    <area-calculator
+      data-base-price="{{ product.price }}"
+      data-product-id="{{ product.id }}"
+      data-domain="{{ shop.domain }}"
+      class="area-calculator">
+      <div class="area-calculator__inputs">
+        <div class="field">
+          <label for="Length-{{ section.id }}" class="form__label">
+            {{ 'products.product.length' | t }}
+          </label>
+          <div class="field__input-wrapper">
+            <input
+              type="number"
+              name="length"
+              id="Length-{{ section.id }}"
+              class="field__input"
+              data-length-input
+              min="{{ block.settings.min_length }}"
+              max="{{ block.settings.max_length }}"
+              step="1"
+              required>
+            <span class="field__unit">cm</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="Width-{{ section.id }}" class="form__label">
+            {{ 'products.product.width' | t }}
+          </label>
+          <div class="field__input-wrapper">
+            <input
+              type="number"
+              name="width"
+              id="Width-{{ section.id }}"
+              class="field__input"
+              data-width-input
+              min="{{ block.settings.min_width }}"
+              max="{{ block.settings.max_width }}"
+              step="1"
+              required>
+            <span class="field__unit">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="area-calculator__results">
+        <div class="area-result">
+          <span class="area-result__label">{{ 'products.product.total_area' | t }}</span>
+          <span class="area-result__value">
+            <span data-total-area>0.00</span>
+            m²
+          </span>
+        </div>
+
+        <div class="price-result">
+          <span class="price-result__label">{{ 'products.product.total_price' | t }}</span>
+          <span class="price-result__value" data-total-price></span>
+        </div>
+      </div>
+    </area-calculator>
+  </div>
+
+  <style>
+    .area-calculator-wrapper {
+      margin-bottom: 1.5rem;
+    }
+
+    .area-calculator__inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field__input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .field__input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+    }
+
+    .field__unit {
+      position: absolute;
+      right: 0.75rem;
+      color: var(--color-text-subdued);
+    }
+
+    .area-calculator__results {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--color-background-secondary);
+      border-radius: 4px;
+    }
+
+    .area-result,
+    .price-result {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .area-result__label,
+    .price-result__label {
+      font-size: 0.875rem;
+      color: var(--color-text-subdued);
+      margin-bottom: 0.25rem;
+    }
+
+    .area-result__value,
+    .price-result__value {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+  </style>
+{% endif %}

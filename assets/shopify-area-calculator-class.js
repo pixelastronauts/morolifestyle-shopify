@@ -6,6 +6,8 @@ class AreaCalculator extends HTMLElement {
   constructor() {
     super();
     this.basePrice = parseFloat(this.dataset.basePrice);
+    this.productId = this.dataset.productId;
+    this.domain = this.dataset.domain || 'https://price-calculator.test';
     this.inputSelectors = {
       length: '[data-length-input]',
       width: '[data-width-input]',
@@ -18,9 +20,33 @@ class AreaCalculator extends HTMLElement {
       originalPrice: '[data-original-price]'
     };
 
+    // Add translation strings
+    this.strings = {
+      enterLength: window.themeStrings?.enterLength || 'Please enter a length between {min}-{max}cm',
+      enterWidth: window.themeStrings?.enterWidth || 'Please enter a width between {min}-{max}cm',
+      failedVariant: window.themeStrings?.failedVariant || 'Failed to create variant',
+      widthRange: window.themeStrings?.widthRange || 'Width must be between {min}-{max}cm',
+      lengthRange: window.themeStrings?.lengthRange || 'Length must be between {min}-{max}cm'
+    };
+
     // Add debounce timeout property
     this.debounceTimeout = null;
 
+    // Track if inputs have been interacted with
+    this.inputsInteracted = {
+      length: false,
+      width: false
+    };
+
+    // Cache the active formula
+    this.activeFormula = null;
+
+    // Initialize after fetching formula
+    this.initialize();
+  }
+
+  async initialize() {
+    await this.fetchActiveFormula();
     this.init();
   }
 
@@ -28,6 +54,128 @@ class AreaCalculator extends HTMLElement {
   debounce(func, wait = 300) {
     clearTimeout(this.debounceTimeout);
     this.debounceTimeout = setTimeout(() => func(), wait);
+  }
+
+  async fetchActiveFormula() {
+    try {
+      const response = await fetch(`${this.domain}/api/price-formulas`);
+      const formulas = await response.json();
+      this.activeFormula = formulas.find(f => f.is_active) || formulas[0];
+
+      // Log the formula details for debugging
+      console.log('Active Formula:', {
+        name: this.activeFormula.name,
+        parameters: this.activeFormula.formula_parameters,
+        ranges: this.activeFormula.value_ranges,
+        explanation: this.activeFormula.formula_explanation
+      });
+    } catch (error) {
+      console.error('Error fetching price formula:', error);
+    }
+  }
+
+  getValueForInput(input, ranges) {
+    for (const range of ranges) {
+      if (input >= range.start && input <= range.end) {
+        // Use value_raw instead of value since value includes the currency symbol
+        return range.value_raw;
+      }
+    }
+    return null;
+  }
+
+  calculatePrice(width, length) {
+    if (!this.activeFormula) return 0;
+
+    try {
+      // Get values from ranges using value_raw
+      const widthValue = this.getValueForInput(width, this.activeFormula.value_ranges);
+      const lengthValue = length;
+
+      if (!widthValue || !lengthValue) {
+        return 0;
+      }
+
+      // Get formula parameters
+      const {
+        markup,
+        tax,
+        base_addition,
+        length_divisor
+      } = this.activeFormula.formula_parameters;
+
+      console.log('Formula parameters:', {
+        markup,
+        tax,
+        base_addition,
+        length_divisor
+      });
+
+      // Calculate price using the formula:
+      // width_value * (length_value / length_divisor) * (markup + 1) * (tax + 1) + base_addition
+      const price = widthValue *
+        (lengthValue / length_divisor) *
+        (markup + 1) *
+        (tax + 1) +
+        base_addition;
+
+      return Math.floor(price) * 100;
+    } catch (error) {
+      console.error('Error calculating price:', error);
+      return 0;
+    }
+  }
+
+  getErrorMessageForInputs(width, length) {
+    const ranges = this.activeFormula.value_ranges;
+    const minRange = ranges[0];
+    const maxRange = ranges[ranges.length - 1];
+
+    let message = '';
+
+    if (!this.getValueForInput(width, ranges)) {
+      message += this.strings.widthRange
+        .replace('{min}', minRange.start)
+        .replace('{max}', maxRange.end) + ' ';
+    }
+
+    if (!this.getValueForInput(length, ranges)) {
+      message += this.strings.lengthRange
+        .replace('{min}', minRange.start)
+        .replace('{max}', maxRange.end);
+    }
+
+    return message.trim();
+  }
+
+  async createVariant(width, length, variantId) {
+    if (!this.activeFormula) return null;
+
+    try {
+      const response = await fetch(`${this.domain}/api/make-variant`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          formula_id: this.activeFormula.id,
+          width,
+          length,
+          productId: this.productId,
+          variantId
+        })
+      });
+
+      const result = await response.json();
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      return result.variant;
+    } catch (error) {
+      console.error('Error creating variant:', error);
+      return null;
+    }
   }
 
   init() {
@@ -39,22 +187,305 @@ class AreaCalculator extends HTMLElement {
     this.totalAreaOutput = this.querySelector(this.outputSelectors.area);
     this.totalPriceOutput = this.querySelector(this.outputSelectors.price);
     this.originalPriceOutput = this.querySelector(this.outputSelectors.originalPrice);
+    this.form = this.closest('form');
+
+    // Create error message elements
+    this.createErrorElements();
+
+    // Prefill inputs with minimum values from formula ranges if available
+    if (this.activeFormula && this.activeFormula.value_ranges.length > 0) {
+      const minRange = this.activeFormula.value_ranges[0];
+
+      if (this.lengthInput) {
+        this.lengthInput.value = minRange.start;
+        this.inputsInteracted.length = true;
+      }
+
+      if (this.widthInput) {
+        this.widthInput.value = minRange.start;
+        this.inputsInteracted.width = true;
+      }
+    } else {
+      // Fallback to input min attributes if no formula ranges
+      if (this.lengthInput) {
+        const minLength = parseFloat(this.lengthInput.min) || 0;
+        this.lengthInput.value = minLength;
+        this.inputsInteracted.length = true;
+      }
+
+      if (this.widthInput) {
+        const minWidth = parseFloat(this.widthInput.min) || 0;
+        this.widthInput.value = minWidth;
+        this.inputsInteracted.width = true;
+      }
+    }
 
     // Bind event listeners
     this.bindEvents();
 
-    // Initial calculation
+    // Initial calculation and validation
     this.updateCalculations();
+    this.validateInput(this.lengthInput, 'length');
+    this.validateInput(this.widthInput, 'width');
+  }
+
+  createErrorElements() {
+    // Create error message containers
+    ['length', 'width'].forEach(type => {
+      const input = this[`${type}Input`];
+      if (!input) return;
+
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'twcss-text-red-500 twcss-text-xs twcss-mt-1 twcss-hidden';
+      errorDiv.setAttribute(`data-${type}-error`, '');
+      input.parentNode.insertBefore(errorDiv, input.nextSibling);
+    });
   }
 
   bindEvents() {
-    this.lengthInput?.addEventListener('input', this.handleInputChange.bind(this));
-    this.widthInput?.addEventListener('input', this.handleInputChange.bind(this));
-    this.quantityInput?.addEventListener('change', this.handleInputChange.bind(this));
+    // Track first interaction on input instead of focus
+    this.lengthInput?.addEventListener('input', () => {
+      this.inputsInteracted.length = true;
+      this.validateAndUpdate(this.lengthInput, 'length');
+    });
+    this.widthInput?.addEventListener('input', () => {
+      this.inputsInteracted.width = true;
+      this.validateAndUpdate(this.widthInput, 'width');
+    });
+
+    this.quantityInput?.addEventListener('change', () => this.updateCalculations());
+    this.form?.addEventListener('submit', this.handleSubmit.bind(this));
+  }
+
+  validateAndUpdate(input, type) {
+    this.debounce(() => {
+      this.validateInput(input, type);
+      this.updateCalculations();
+    }, 300);
+  }
+
+  validateInput(input, type) {
+    if (!input || !this.inputsInteracted[type]) return true;
+
+    const value = parseFloat(input.value) || 0;
+    const min = parseFloat(input.min) || 0;
+    const max = parseFloat(input.max) || Infinity;
+    const isValid = value > 0 && value >= min && value <= max;
+
+    const errorElement = this.querySelector(`[data-${type}-error]`);
+    const submitButton = this.form?.querySelector('[type="submit"]');
+
+    if (!value || !isValid) {
+      input.classList.add('!twcss-border-red-500', '!twcss-ring-red-500');
+      input.setAttribute('aria-invalid', 'true');
+      if (errorElement) {
+        const errorMessage = type === 'length' ? this.strings.enterLength : this.strings.enterWidth;
+        errorElement.textContent = errorMessage
+          .replace('{min}', min)
+          .replace('{max}', max);
+        errorElement.classList.remove('twcss-hidden');
+      }
+      if (submitButton) {
+        submitButton.setAttribute('disabled', 'disabled');
+        submitButton.classList.add('twcss-opacity-50', 'twcss-cursor-not-allowed');
+      }
+    } else {
+      input.classList.remove('!twcss-border-red-500', '!twcss-ring-red-500');
+      input.removeAttribute('aria-invalid');
+      if (errorElement) {
+        errorElement.classList.add('twcss-hidden');
+        errorElement.textContent = '';
+      }
+      // Only enable submit if both inputs are valid
+      if (submitButton && this.areAllInputsValid()) {
+        submitButton.removeAttribute('disabled');
+        submitButton.classList.remove('twcss-opacity-50', 'twcss-cursor-not-allowed');
+      }
+    }
+
+    return isValid;
   }
 
   handleInputChange(event) {
-    this.debounce(() => this.updateCalculations());
+    this.updateCalculations();
+  }
+
+  areAllInputsValid() {
+    const lengthValue = parseFloat(this.lengthInput?.value) || 0;
+    const widthValue = parseFloat(this.widthInput?.value) || 0;
+    const lengthMin = parseFloat(this.lengthInput?.min) || 0;
+    const lengthMax = parseFloat(this.lengthInput?.max) || Infinity;
+    const widthMin = parseFloat(this.widthInput?.min) || 0;
+    const widthMax = parseFloat(this.widthInput?.max) || Infinity;
+
+    const isLengthValid = lengthValue > 0 && lengthValue >= lengthMin && lengthValue <= lengthMax;
+    const isWidthValid = widthValue > 0 && widthValue >= widthMin && widthValue <= widthMax;
+
+    return isLengthValid && isWidthValid;
+  }
+
+  // Get current variant ID from the form
+  getCurrentVariantId() {
+    const form = this.closest('form');
+    const variantInput = form?.querySelector(this.inputSelectors.variant);
+    return variantInput?.value;
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+
+    // Mark both inputs as interacted with on submit
+    this.inputsInteracted.length = true;
+    this.inputsInteracted.width = true;
+
+    const length = parseFloat(this.lengthInput?.value) || 0;
+    const width = parseFloat(this.widthInput?.value) || 0;
+
+    if (!this.areAllInputsValid()) {
+      return;
+    }
+
+    const submitButton = this.form.querySelector('[type="submit"]');
+    const loadingSpinner = submitButton.querySelector('.loading__spinner');
+
+    try {
+      // Disable submit button and show loading state
+      submitButton.setAttribute('aria-disabled', true);
+      submitButton.classList.add('loading');
+      loadingSpinner?.classList.remove('twcss-hidden');
+
+      // Get current variant ID
+      const currentVariantId = this.getCurrentVariantId();
+      if (!currentVariantId) {
+        throw new Error('No variant selected');
+      }
+
+      // Create variant with calculated price
+      const variant = await this.createVariant(width, length, currentVariantId);
+
+      // Handle variant creation errors
+      if (!variant) {
+        console.error('Failed to create variant:', {
+          width,
+          length,
+          productId: this.productId,
+          variantId: currentVariantId
+        });
+        throw new Error(this.strings.failedVariant);
+      }
+
+      // Check if variant has an error property
+      if (variant.error) {
+        console.error('Variant creation error:', variant.error, {
+          width,
+          length,
+          productId: this.productId,
+          variantId: currentVariantId
+        });
+        throw new Error(variant.error || this.strings.failedVariant);
+      }
+
+      // Extract numeric ID from GraphQL ID
+      const numericId = variant.id.split('/').pop();
+
+      // Get cart drawer before adding to cart
+      const cartDrawer = document.querySelector('cart-drawer');
+
+      // Create FormData for the request
+      const formData = new FormData();
+      formData.append('id', numericId);
+      formData.append('quantity', this.quantityInput?.value || 1);
+
+      // Add properties
+      formData.append('properties[_Length]', length);
+      formData.append('properties[_Width]', width);
+      formData.append('properties[Verticaal (cm)]', length);
+      formData.append('properties[Horizontaal (cm)]', width);
+
+      // Add sections if cart drawer exists
+      if (cartDrawer) {
+        formData.append(
+          'sections',
+          cartDrawer.getSectionsToRender().map((section) => section.id)
+        );
+        formData.append('sections_url', window.location.pathname);
+        cartDrawer.setActiveElement(document.activeElement);
+      }
+
+      // Add to cart using Shopify Cart API
+      const config = {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+      };
+
+      const response = await fetch(window.Shopify.routes.root + 'cart/add.js', config);
+      const result = await response.json();
+
+      if (result.status === 422 || result.status === 'bad_request') {
+        throw new Error(result.description || result.message || 'Failed to add to cart');
+      }
+
+      // If we have a cart drawer, get the sections data
+      if (cartDrawer) {
+        try {
+          const sectionsResponse = await fetch(`${window.Shopify.routes.root}cart/update.js`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sections: cartDrawer.getSectionsToRender().map((section) => section.id),
+              sections_url: window.location.pathname
+            })
+          });
+
+          if (sectionsResponse.ok) {
+            const sectionsData = await sectionsResponse.json();
+            cartDrawer.renderContents(sectionsData);
+            // Remove is-empty class if it exists
+            if (cartDrawer.classList.contains('is-empty')) {
+              cartDrawer.classList.remove('is-empty');
+            }
+          }
+          cartDrawer.open();
+        } catch (error) {
+          console.error('Error updating cart drawer:', error);
+          // Still remove is-empty class and open drawer
+          if (cartDrawer.classList.contains('is-empty')) {
+            cartDrawer.classList.remove('is-empty');
+          }
+          cartDrawer.open();
+        }
+      }
+
+      // Dispatch event for successful add to cart
+      this.dispatchEvent(
+        new CustomEvent('variant:added', {
+          bubbles: true,
+          detail: {
+            variant: { ...variant, id: numericId },  // Pass the numeric ID
+            result
+          }
+        })
+      );
+
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      // Show error in the appropriate error element
+      const errorElement = this.querySelector('[data-length-error]');
+      if (errorElement) {
+        errorElement.textContent = error.message;
+        errorElement.classList.remove('twcss-hidden');
+      }
+    } finally {
+      // Reset button state
+      submitButton.classList.remove('loading');
+      submitButton.removeAttribute('aria-disabled');
+      loadingSpinner?.classList.add('twcss-hidden');
+    }
   }
 
   updateCalculations() {
@@ -65,8 +496,8 @@ class AreaCalculator extends HTMLElement {
     // Convert cm² to m²
     const areaSqm = (length * width) / 10000;
 
-    // Calculate total price (basePrice is already in cents)
-    const totalPrice = areaSqm * this.basePrice * quantity;
+    // Calculate price using the local formula calculation
+    const totalPrice = this.calculatePrice(width, length) * quantity;
 
     // Update displays
     this.updateDisplays(areaSqm, totalPrice);
@@ -98,38 +529,11 @@ class AreaCalculator extends HTMLElement {
       this.variantInput.dataset.price = price;
     }
 
-    // Get min/max values from input elements
     const length = parseFloat(this.lengthInput?.value) || 0;
     const width = parseFloat(this.widthInput?.value) || 0;
-    const minLength = parseFloat(this.lengthInput?.min) || 0;
-    const maxLength = parseFloat(this.lengthInput?.max) || Infinity;
-    const minWidth = parseFloat(this.widthInput?.min) || 0;
-    const maxWidth = parseFloat(this.widthInput?.max) || Infinity;
 
-    // Get error elements
-    const lengthError = this.querySelector('[data-length-error]');
-    const widthError = this.querySelector('[data-width-error]');
-
-    // Validate each input separately, only if there's a value
-    if (this.lengthInput?.value && (length < minLength || length > maxLength)) {
-      this.lengthInput.classList.add('!twcss-border-red-500', '!twcss-ring-red-500');
-      lengthError.textContent = `Please enter a length between ${minLength}-${maxLength}cm`;
-    } else {
-      this.lengthInput.classList.remove('!twcss-border-red-500', '!twcss-ring-red-500');
-      lengthError.textContent = '';
-    }
-
-    if (this.widthInput?.value && (width < minWidth || width > maxWidth)) {
-      this.widthInput.classList.add('!twcss-border-red-500', '!twcss-ring-red-500');
-      widthError.textContent = `Please enter a width between ${minWidth}-${maxWidth}cm`;
-    } else {
-      this.widthInput.classList.remove('!twcss-border-red-500', '!twcss-ring-red-500');
-      widthError.textContent = '';
-    }
-
-    // Return if either input is invalid (only when they have values)
-    if ((this.lengthInput?.value && (length < minLength || length > maxLength)) ||
-      (this.widthInput?.value && (width < minWidth || width > maxWidth))) {
+    // Validate inputs
+    if (!this.areAllInputsValid()) {
       return;
     }
 

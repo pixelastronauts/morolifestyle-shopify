@@ -15,10 +15,9 @@
     data-section="{{ section.id }}"
     data-url="{{ product.url }}"
     {% if update_url == false %}
-      data-update-url="false"
+    data-update-url="false"
     {% endif %}
-    {{ block.shopify_attributes }}
-  >
+    {{ block.shopify_attributes }}>
     {%- for option in product.options_with_values -%}
       {%- liquid
         assign swatch_count = option.values | map: 'swatch' | compact | size
@@ -40,21 +39,27 @@
               {{- option.selected_value -}}
             </span>
           </legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
+          {% render 'product-variant-options'
+            , product: product
+            , option: option
+            , block: block
+            , picker_type: picker_type
           %}
         </fieldset>
       {%- elsif picker_type == 'button' -%}
         <fieldset class="js product-form__input product-form__input--pill">
-          <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options',
-            product: product,
-            option: option,
-            block: block,
-            picker_type: picker_type
+          <legend
+            class="form__label"
+            {% if option.name == 'Title' %}
+            style="display: none;"
+            {% endif %}>
+            {{ option.name }}
+          </legend>
+          {% render 'product-variant-options'
+            , product: product
+            , option: option
+            , block: block
+            , picker_type: picker_type
           %}
         </fieldset>
       {%- else -%}
@@ -64,24 +69,22 @@
           </label>
           <div class="select">
             {%- if picker_type == 'swatch_dropdown' -%}
-              <span
-                data-selected-dropdown-swatch="options[{{ option.name | escape }}]"
-                class="dropdown-swatch"
-              >
-                {% render 'swatch', swatch: option.selected_value.swatch, shape: block.settings.swatch_shape %}
+              <span data-selected-dropdown-swatch="options[{{ option.name | escape }}]" class="dropdown-swatch">
+                {% render 'swatch'
+                  , swatch: option.selected_value.swatch
+                  , shape: block.settings.swatch_shape %}
               </span>
             {%- endif -%}
             <select
               id="Option-{{ section.id }}-{{ forloop.index0 }}"
               class="select__select"
               name="options[{{ option.name | escape }}]"
-              form="{{ product_form_id }}"
-            >
-              {% render 'product-variant-options',
-                product: product,
-                option: option,
-                block: block,
-                picker_type: picker_type
+              form="{{ product_form_id }}">
+              {% render 'product-variant-options'
+                , product: product
+                , option: option
+                , block: block
+                , picker_type: picker_type
               %}
             </select>
             {% render 'icon-caret' %}

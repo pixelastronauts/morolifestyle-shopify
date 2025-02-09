@@ -118,6 +118,7 @@
       "add_to_cart": "Aan winkelwagen toevoegen",
       "description": "Beschrijving",
       "on_sale": "Aanbieding",
+      "total_price": "Totaal",
       "quantity": {
         "label": "Aantal",
         "input_label": "Aantal voor {{ product }}",
@@ -527,5 +528,12 @@
       "expanded": "Formulier voor ontvanger cadeaubon uitgevouwen",
       "collapsed": "Formulier voor ontvanger cadeaubon ingeklapt"
     }
+  },
+    "calculator": {
+    "enterLength": "Voer een lengte in tussen {min} en {max} meter",
+    "enterWidth": "Voer een breedte in tussen {min} en {max} meter",
+    "failedVariant": "Kon geen passende productvariant vinden",
+    "widthRange": "Breedte moet tussen {min} en {max} meter zijn",
+    "lengthRange": "Lengte moet tussen {min} en {max} meter zijn"
   }
 }

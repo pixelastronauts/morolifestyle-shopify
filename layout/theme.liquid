@@ -1,3 +1,4 @@
+<!-- prettier-ignore -->
 <!doctype html>
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
@@ -226,10 +227,8 @@
   --text-boxes-shadow-blur-radius: {{ settings.text_boxes_shadow_blur }}px;
 
   --buttons-radius: {{ settings.buttons_radius }}px;
-  --buttons-radius-outset: {% if settings.buttons_radius > 0 %}{{ settings.buttons_radius | plus: settings.buttons_border_thickness }}
-{% else %}0{% endif %}px;
-  --buttons-border-width: {% if settings.buttons_border_opacity > 0 %}{{ settings.buttons_border_thickness }}
-{% else %}0{% endif %}px;
+  --buttons-radius-outset: {% if settings.buttons_radius > 0 %}{{ settings.buttons_radius | plus: settings.buttons_border_thickness }}px{% else %}0px{% endif %};
+  --buttons-border-width: {% if settings.buttons_border_opacity > 0 %}{{ settings.buttons_border_thickness }}px{% else %}0px{% endif %};
   --buttons-border-opacity: {{ settings.buttons_border_opacity | divided_by: 100.0 }};
   --buttons-shadow-opacity: {{ settings.buttons_shadow_opacity | divided_by: 100.0 }};
   --buttons-shadow-visible: {% if settings.buttons_shadow_opacity > 0 %}1{% else %}0{% endif %};
@@ -411,6 +410,14 @@ body {
         recipientFormExpanded: `{{ 'recipient.form.expanded' | t }}`,
         recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
         countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
+      };
+
+      window.themeStrings = {
+        enterLength: `{{ 'calculator.enterLength' | t }}`,
+        enterWidth: `{{ 'calculator.enterWidth' | t }}`,
+        failedVariant: `{{ 'calculator.failedVariant' | t }}`,
+        widthRange: `{{ 'calculator.widthRange' | t }}`,
+        lengthRange: `{{ 'calculator.lengthRange' | t }}`
       };
     </script>
 

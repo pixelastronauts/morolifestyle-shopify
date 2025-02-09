@@ -629,6 +629,10 @@ video {
   margin-left: 0.5rem;
 }
 
+.twcss-mt-1 {
+  margin-top: 0.25rem;
+}
+
 .twcss-flex {
   display: flex;
 }
@@ -639,6 +643,10 @@ video {
 
 .twcss-grid {
   display: grid;
+}
+
+.twcss-hidden {
+  display: none;
 }
 
 .twcss-w-4 {
@@ -660,6 +668,10 @@ video {
 
 .twcss-transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.twcss-cursor-not-allowed {
+  cursor: not-allowed;
 }
 
 .twcss-grid-cols-2 {
@@ -740,6 +752,16 @@ video {
 .twcss-text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.twcss-text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.twcss-text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .twcss-font-medium {
