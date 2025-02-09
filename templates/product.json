@@ -30,10 +30,6 @@
             "text_style": "subtitle"
           }
         },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -45,22 +41,18 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "easify_options_easify_product_options_mYpULA": {
-          "type": "shopify://apps/easify-options/blocks/easify-product-options/d2288b18-c1ba-42f5-b3b3-26c75c8820bf",
-          "settings": {}
+        "area_calculator": {
+          "type": "area_calculator",
+          "settings": {
+            "show_area_calculator": true,
+            "show_area_calculator_price": true
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": true
-          }
-        },
-        "area_calculator": {
-          "type": "area_calculator",
-          "settings": {
-            "show_area_calculator": true,
-            "show_area_calculator_price": true
           }
         },
         "description": {
@@ -122,12 +114,10 @@
         "vendor",
         "title",
         "caption",
-        "price",
         "variant_picker",
         "quantity_selector",
-        "easify_options_easify_product_options_mYpULA",
-        "buy_buttons",
         "area_calculator",
+        "buy_buttons",
         "description",
         "inventory_qnngpg",
         "collapsible-row-0",
