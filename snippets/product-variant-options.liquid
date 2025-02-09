@@ -7,13 +7,12 @@
   - block: {Object} block object.
   - picker_type: {String} type of picker to dispay
 
-
   Usage:
   {% render 'product-variant-options',
-    product: product,
-    option: option,
-    block: block
-    picker_type: picker_type
+  product: product,
+  option: option,
+  block: block
+  picker_type: picker_type
   %}
 {% endcomment %}
 {%- liquid
@@ -61,13 +60,11 @@
   {%- capture input_id -%}
     {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
   {%- endcapture -%}
-
   {%- capture label_unavailable -%}
     <span class="visually-hidden label-unavailable">
       {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
     </span>
   {%- endcapture -%}
-
   {%- if picker_type == 'swatch' -%}
     {% liquid
       assign checked = false
@@ -80,16 +77,7 @@
       {{ label_unavailable }}
     {%- endcapture -%}
     {%
-      render 'swatch-input',
-      id: input_id,
-      name: option.name,
-      value: value | escape,
-      swatch: value.swatch,
-      product_form_id: product_form_id,
-      checked: checked,
-      visually_disabled: option_disabled,
-      shape: block.settings.swatch_shape,
-      help_text: help_text
+      render 'swatch-input', id: input_id, name: option.name, value: value | escape, swatch: value.swatch, product_form_id: product_form_id, checked: checked, visually_disabled: option_disabled, shape: block.settings.swatch_shape, help_text: help_text
     %}
   {%- elsif picker_type == 'button' -%}
     <input
@@ -99,12 +87,11 @@
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
       {% if option.selected_value == value %}
-        checked
+      checked
       {% endif %}
       {% if option_disabled %}
-        class="disabled"
-      {% endif %}
-    >
+      class="disabled"
+      {% endif %}>
     <label for="{{ input_id }}">
       {{ value -}}
       {{ label_unavailable }}
@@ -113,15 +100,14 @@
     <option
       value="{{ value | escape }}"
       {% if option.selected_value == value %}
-        selected="selected"
+      selected="selected"
       {% endif %}
       {% if swatch_value and picker_type == 'swatch_dropdown' %}
-        data-option-swatch-value="{{ swatch_value }}"
-        {% if swatch_focal_point %}
-          data-option-swatch-focal-point="{{ swatch_focal_point }}"
-        {% endif %}
+      data-option-swatch-value="{{ swatch_value }}"
+      {% if swatch_focal_point %}
+      data-option-swatch-focal-point="{{ swatch_focal_point }}"
       {% endif %}
-    >
+      {% endif %}>
       {% if option_disabled -%}
         {{- 'products.product.value_unavailable' | t: option_value: value -}}
       {%- else -%}

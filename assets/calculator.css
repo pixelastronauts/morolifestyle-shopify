@@ -1,0 +1,47 @@
+#calculator {
+  @apply flex flex-col gap-4 mb-4;
+}
+
+#calculator .element {
+  @apply grid grid-cols-2 gap-4;
+}
+
+#calculator label {
+  @apply text-sm font-medium text-gray-700;
+}
+
+#calculator input[type="number"] {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm pr-12;
+}
+
+#calculator input[type="number"]:focus {
+  @apply outline-none ring-1 ring-moro-500 border-moro-500;
+}
+
+#calculator input[type="number"]::-webkit-outer-spin-button,
+#calculator input[type="number"]::-webkit-inner-spin-button {
+  @apply appearance-none m-0;
+}
+
+.price-marker {
+  @apply text-lg font-medium flex justify-between items-center mt-4;
+}
+
+#calculator-final-value {
+  @apply ml-2;
+}
+
+#alert-block {
+  @apply text-red-600 text-sm mt-1;
+}
+
+/* Add input wrapper styling */
+.input-wrapper {
+  @apply relative;
+}
+
+/* Add cm suffix styling */
+.input-wrapper::after {
+  content: "cm";
+  @apply absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500;
+}
