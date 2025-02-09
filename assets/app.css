@@ -633,6 +633,10 @@ video {
   margin-top: 0.25rem;
 }
 
+.twcss-mt-2 {
+  margin-top: 0.5rem;
+}
+
 .twcss-flex {
   display: flex;
 }
@@ -744,6 +748,10 @@ video {
   padding-right: 3rem;
 }
 
+.twcss-text-center {
+  text-align: center;
+}
+
 .twcss-text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -791,6 +799,11 @@ video {
 .twcss-text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.twcss-text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
 .twcss-opacity-50 {

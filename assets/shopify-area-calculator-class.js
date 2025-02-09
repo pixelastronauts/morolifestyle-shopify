@@ -11,8 +11,9 @@ class AreaCalculator extends HTMLElement {
     this.inputSelectors = {
       length: '[data-length-input]',
       width: '[data-width-input]',
-      variant: '[name="id"]',
-      quantity: '[name="quantity"]'
+      variant: 'form[action="/cart/add"] [name="id"]',
+      quantity: 'form[action="/cart/add"] [name="quantity"]',
+      form: 'form[action="/cart/add"]'
     };
     this.outputSelectors = {
       area: '[data-total-area]',
@@ -179,15 +180,16 @@ class AreaCalculator extends HTMLElement {
   }
 
   init() {
-    // Cache DOM elements
+    // Cache DOM elements - now using document.querySelector for form elements
     this.lengthInput = this.querySelector(this.inputSelectors.length);
     this.widthInput = this.querySelector(this.inputSelectors.width);
     this.variantInput = document.querySelector(this.inputSelectors.variant);
     this.quantityInput = document.querySelector(this.inputSelectors.quantity);
+    this.form = document.querySelector(this.inputSelectors.form);
     this.totalAreaOutput = this.querySelector(this.outputSelectors.area);
     this.totalPriceOutput = this.querySelector(this.outputSelectors.price);
     this.originalPriceOutput = this.querySelector(this.outputSelectors.originalPrice);
-    this.form = this.closest('form');
+    this.submitButton = document.querySelector('[type="submit"][name="add"]');
 
     // Create error message elements
     this.createErrorElements();
@@ -254,7 +256,17 @@ class AreaCalculator extends HTMLElement {
     });
 
     this.quantityInput?.addEventListener('change', () => this.updateCalculations());
-    this.form?.addEventListener('submit', this.handleSubmit.bind(this));
+
+    // Use button click instead of form submit
+    console.log('Setting up button click handler, button:', this.submitButton);
+    if (this.submitButton) {
+      this.submitButton.addEventListener('click', (event) => {
+        console.log('Button clicked');
+        event.preventDefault();
+        event.stopPropagation(); // Stop event from bubbling up
+        this.handleSubmit(event);
+      });
+    }
   }
 
   validateAndUpdate(input, type) {
@@ -273,7 +285,6 @@ class AreaCalculator extends HTMLElement {
     const isValid = value > 0 && value >= min && value <= max;
 
     const errorElement = this.querySelector(`[data-${type}-error]`);
-    const submitButton = this.form?.querySelector('[type="submit"]');
 
     if (!value || !isValid) {
       input.classList.add('!twcss-border-red-500', '!twcss-ring-red-500');
@@ -285,9 +296,9 @@ class AreaCalculator extends HTMLElement {
           .replace('{max}', max);
         errorElement.classList.remove('twcss-hidden');
       }
-      if (submitButton) {
-        submitButton.setAttribute('disabled', 'disabled');
-        submitButton.classList.add('twcss-opacity-50', 'twcss-cursor-not-allowed');
+      if (this.submitButton) {
+        this.submitButton.setAttribute('disabled', 'disabled');
+        this.submitButton.classList.add('twcss-opacity-50', 'twcss-cursor-not-allowed');
       }
     } else {
       input.classList.remove('!twcss-border-red-500', '!twcss-ring-red-500');
@@ -297,9 +308,9 @@ class AreaCalculator extends HTMLElement {
         errorElement.textContent = '';
       }
       // Only enable submit if both inputs are valid
-      if (submitButton && this.areAllInputsValid()) {
-        submitButton.removeAttribute('disabled');
-        submitButton.classList.remove('twcss-opacity-50', 'twcss-cursor-not-allowed');
+      if (this.submitButton && this.areAllInputsValid()) {
+        this.submitButton.removeAttribute('disabled');
+        this.submitButton.classList.remove('twcss-opacity-50', 'twcss-cursor-not-allowed');
       }
     }
 
@@ -326,13 +337,16 @@ class AreaCalculator extends HTMLElement {
 
   // Get current variant ID from the form
   getCurrentVariantId() {
-    const form = this.closest('form');
-    const variantInput = form?.querySelector(this.inputSelectors.variant);
-    return variantInput?.value;
+    return this.variantInput?.value;
   }
 
   async handleSubmit(event) {
-    event.preventDefault();
+    console.log('handleSubmit called', {
+      form: this.form,
+      variantInput: this.variantInput,
+      variantValue: this.variantInput?.value,
+      submitButton: this.submitButton
+    });
 
     // Mark both inputs as interacted with on submit
     this.inputsInteracted.length = true;
@@ -345,14 +359,15 @@ class AreaCalculator extends HTMLElement {
       return;
     }
 
-    const submitButton = this.form.querySelector('[type="submit"]');
-    const loadingSpinner = submitButton.querySelector('.loading__spinner');
+    const loadingSpinner = this.submitButton?.querySelector('.loading__spinner');
 
     try {
       // Disable submit button and show loading state
-      submitButton.setAttribute('aria-disabled', true);
-      submitButton.classList.add('loading');
-      loadingSpinner?.classList.remove('twcss-hidden');
+      if (this.submitButton) {
+        this.submitButton.setAttribute('aria-disabled', true);
+        this.submitButton.classList.add('loading');
+        loadingSpinner?.classList.remove('hidden');
+      }
 
       // Get current variant ID
       const currentVariantId = this.getCurrentVariantId();
@@ -388,75 +403,67 @@ class AreaCalculator extends HTMLElement {
       // Extract numeric ID from GraphQL ID
       const numericId = variant.id.split('/').pop();
 
-      // Get cart drawer before adding to cart
-      const cartDrawer = document.querySelector('cart-drawer');
-
-      // Create FormData for the request
-      const formData = new FormData();
-      formData.append('id', numericId);
-      formData.append('quantity', this.quantityInput?.value || 1);
-
-      // Add properties
-      formData.append('properties[_Length]', length);
-      formData.append('properties[_Width]', width);
-      formData.append('properties[Verticaal (cm)]', length);
-      formData.append('properties[Horizontaal (cm)]', width);
-
-      // Add sections if cart drawer exists
-      if (cartDrawer) {
-        formData.append(
-          'sections',
-          cartDrawer.getSectionsToRender().map((section) => section.id)
-        );
-        formData.append('sections_url', window.location.pathname);
-        cartDrawer.setActiveElement(document.activeElement);
-      }
-
-      // Add to cart using Shopify Cart API
-      const config = {
-        method: 'POST',
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: formData
+      // Prepare cart data
+      const cartData = {
+        items: [{
+          id: numericId,
+          quantity: parseInt(this.quantityInput?.value) || 1,
+          properties: {
+            '_Length': length,
+            '_Width': width,
+            'Verticaal (cm)': length,
+            'Horizontaal (cm)': width,
+          }
+        }]
       };
 
-      const response = await fetch(window.Shopify.routes.root + 'cart/add.js', config);
+      // Add to cart using Shopify Cart API
+      const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cartData)
+      });
+
       const result = await response.json();
 
       if (result.status === 422 || result.status === 'bad_request') {
         throw new Error(result.description || result.message || 'Failed to add to cart');
       }
 
-      // If we have a cart drawer, get the sections data
+      // Update cart drawer if it exists
+      const cartDrawer = document.querySelector('cart-drawer');
       if (cartDrawer) {
-        try {
-          const sectionsResponse = await fetch(`${window.Shopify.routes.root}cart/update.js`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              sections: cartDrawer.getSectionsToRender().map((section) => section.id),
-              sections_url: window.location.pathname
-            })
-          });
+        // Get sections to render
+        const sections = cartDrawer.getSectionsToRender().map((section) => section.id);
 
-          if (sectionsResponse.ok) {
-            const sectionsData = await sectionsResponse.json();
-            cartDrawer.renderContents(sectionsData);
-            // Remove is-empty class if it exists
-            if (cartDrawer.classList.contains('is-empty')) {
-              cartDrawer.classList.remove('is-empty');
-            }
-          }
-          cartDrawer.open();
-        } catch (error) {
-          console.error('Error updating cart drawer:', error);
-          // Still remove is-empty class and open drawer
-          if (cartDrawer.classList.contains('is-empty')) {
-            cartDrawer.classList.remove('is-empty');
-          }
+        // Fetch cart sections
+        const sectionsResponse = await fetch(`${window.Shopify.routes.root}cart/update.js`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sections: sections,
+            sections_url: window.location.pathname
+          })
+        });
+
+        if (sectionsResponse.ok) {
+          const sectionsData = await sectionsResponse.json();
+
+          // Try to get non-zero prices with polling
+          const updatedSectionsData = await this.pollForNonZeroPrices(sections, sectionsData);
+
+          // Remove any existing message
+          this.removePollingMessage();
+
+          // Render the final content
+          cartDrawer.renderContents(updatedSectionsData);
+
+          // Ensure drawer is opened and empty state is removed
+          cartDrawer.classList.remove('is-empty');
           cartDrawer.open();
         }
       }
@@ -482,9 +489,11 @@ class AreaCalculator extends HTMLElement {
       }
     } finally {
       // Reset button state
-      submitButton.classList.remove('loading');
-      submitButton.removeAttribute('aria-disabled');
-      loadingSpinner?.classList.add('twcss-hidden');
+      if (this.submitButton) {
+        this.submitButton.classList.remove('loading');
+        this.submitButton.removeAttribute('aria-disabled');
+        loadingSpinner?.classList.add('hidden');
+      }
     }
   }
 
@@ -519,9 +528,16 @@ class AreaCalculator extends HTMLElement {
       this.totalAreaOutput.textContent = area.toFixed(2);
     }
 
+    // Update our custom price output
     if (this.totalPriceOutput) {
       this.totalPriceOutput.innerHTML = this.formatMoney(price);
     }
+
+    // Update default Shopify price elements if they exist
+    const defaultPriceElements = document.querySelectorAll('.price-item--regular, .price-item');
+    defaultPriceElements.forEach(element => {
+      element.innerHTML = this.formatMoney(price);
+    });
   }
 
   updateCartInputs(area, price) {
@@ -603,6 +619,168 @@ class AreaCalculator extends HTMLElement {
       style: 'currency',
       currency: currentCurrency
     });
+  }
+
+  createPollingMessage() {
+    // Remove any existing message first
+    this.removePollingMessage();
+
+    const messageDiv = document.createElement('div');
+    messageDiv.id = 'polling-message';
+    messageDiv.className = 'twcss-text-sm twcss-text-gray-600 twcss-mt-2 twcss-text-center';
+    messageDiv.innerHTML = 'Even geduld, we zijn jouw product op maat aan het berekenen...';
+
+    const submitButton = this.submitButton;
+    if (submitButton && submitButton.parentNode) {
+      submitButton.parentNode.insertBefore(messageDiv, submitButton.nextSibling);
+    }
+  }
+
+  removePollingMessage() {
+    const existingMessage = document.getElementById('polling-message');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+  }
+
+  async pollForNonZeroPrices(sections, originalData, maxAttempts = 10) {
+    console.log('Starting price polling process...');
+    console.log('Original sections data:', originalData);
+
+    let currentAttempt = 0;
+    let currentData = originalData;
+
+    // Early return if we don't have cart-drawer section
+    if (!sections.includes('cart-drawer')) {
+      console.log('No cart-drawer section found in sections list');
+      return currentData;
+    }
+
+    while (currentAttempt < maxAttempts) {
+      console.log(`\nAttempt ${currentAttempt + 1} of ${maxAttempts}`);
+
+      // Show message after 4th attempt
+      if (currentAttempt >= 2) {
+        this.createPollingMessage();
+      }
+
+      // Check if current data has zero prices
+      const cartDrawerHtml = currentData?.sections?.['cart-drawer'] || currentData['cart-drawer'];
+      if (!cartDrawerHtml) {
+        console.log('No cart drawer HTML found in response data');
+        return currentData;
+      }
+
+      const hasZeroPrices = this.checkForZeroPrices(cartDrawerHtml);
+      console.log(`Current data has zero prices: ${hasZeroPrices}`);
+
+      if (!hasZeroPrices) {
+        console.log('Found valid non-zero prices, returning data');
+        return currentData;
+      }
+
+      // Exponential backoff delay: 500ms, 1000ms, 2000ms, 4000ms, 8000ms
+      const delay = Math.min(500 * Math.pow(2, currentAttempt), 8000);
+      console.log(`Waiting ${delay}ms before next attempt...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+
+      try {
+        console.log('Fetching updated cart sections...');
+        // Fetch updated cart sections
+        const response = await fetch(`${window.Shopify.routes.root}cart/update.js`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sections: sections,
+            sections_url: window.location.pathname
+          })
+        });
+
+        if (response.ok) {
+          const newData = await response.json();
+          console.log('Received new cart data:', newData);
+
+          // Ensure we have cart drawer HTML in the new data
+          const newCartDrawerHtml = newData?.sections?.['cart-drawer'] || newData['cart-drawer'];
+          if (!newCartDrawerHtml) {
+            console.log('No cart drawer HTML found in new response data');
+            continue;
+          }
+
+          const newHasZeroPrices = this.checkForZeroPrices(newCartDrawerHtml);
+          console.log(`New data has zero prices: ${newHasZeroPrices}`);
+
+          if (!newHasZeroPrices) {
+            console.log('Found valid non-zero prices in new data, returning');
+            return newData;
+          }
+          currentData = newData;
+        } else {
+          console.log('Failed to fetch updated cart sections:', response.status);
+        }
+      } catch (error) {
+        console.error('Error during polling attempt:', error);
+      }
+
+      currentAttempt++;
+    }
+
+    console.log('Exhausted all polling attempts, returning last available data');
+    return currentData;
+  }
+
+  checkForZeroPrices(html) {
+    if (!html) {
+      console.log('No HTML content provided to check prices');
+      return false;
+    }
+
+    // Create a temporary div to parse the HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+
+    // Find all price elements
+    const priceElements = tempDiv.querySelectorAll('.price.price--end');
+    console.log(`Found ${priceElements.length} price elements to check`);
+
+    if (priceElements.length === 0) {
+      console.log('No price elements found in cart drawer HTML');
+      return false;
+    }
+
+    // Check if any price element contains €0,00 and has a non-empty product link
+    const hasZeroPrice = Array.from(priceElements).some(element => {
+      const priceCell = element.closest('.cart-item__totals');
+      if (!priceCell) {
+        console.log('Price element not in a totals cell:', element.textContent);
+        return false;
+      }
+
+      const cartItem = priceCell.closest('.cart-item');
+      if (!cartItem) {
+        console.log('Price element not in a cart item:', element.textContent);
+        return false;
+      }
+
+      const productLink = cartItem.querySelector('.cart-item__name');
+      const price = element.textContent.trim();
+      const hasValidProduct = productLink && productLink.href;
+      const isZeroPrice = price === '€0,00';
+
+      console.log('Price check:', {
+        price,
+        hasValidProduct,
+        isZeroPrice,
+        productUrl: hasValidProduct ? productLink.href : 'none'
+      });
+
+      return hasValidProduct && isZeroPrice;
+    });
+
+    console.log(`Final zero price check result: ${hasZeroPrice}`);
+    return hasZeroPrice;
   }
 }
 

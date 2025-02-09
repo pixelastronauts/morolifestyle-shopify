@@ -12,7 +12,7 @@ if (!customElements.get('product-form')) {
           document.querySelector('cart-notification') ||
           document.querySelector('cart-drawer');
         this.submitButton = this.querySelector('[type="submit"]');
-        this.areaCalculator = this.querySelector('area-calculator');
+        this.areaCalculator = document.querySelector('area-calculator');
 
         if (document.querySelector('cart-drawer'))
           this.submitButton.setAttribute('aria-haspopup', 'dialog');

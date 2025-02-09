@@ -889,10 +889,37 @@
             "show_dynamic_checkout": {
               "label": "Show dynamic checkout buttons",
               "info": "Using the payment methods available on your store, customers see their preferred option, like PayPal or Apple Pay. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)"
+            }
+          }
+        },
+        "area_calculator": {
+          "name": "Area Calculator",
+          "settings": {
+            "show_area_calculator": {
+              "type": "checkbox",
+              "label": "Show area calculator",
+              "default": "true",
+              "info": "Enable area calculator for this product"
             },
-            "show_gift_card_recipient": {
-              "label": "Show recipient information form for gift cards",
-              "info": "Allows buyers to send gift cards on a scheduled date along with a personal message. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/themes\/customizing-themes\/add-gift-card-recipient-fields)"
+            "min_width": {
+              "type": "number",
+              "label": "Minimum width (cm)",
+              "default": "10"
+            },
+            "max_width": {
+              "type": "number",
+              "label": "Maximum width (cm)",
+              "default": "1000"
+            },
+            "min_length": {
+              "type": "number",
+              "label": "Minimum length (cm)",
+              "default": "10"
+            },
+            "max_length": {
+              "type": "number",
+              "label": "Maximum length (cm)",
+              "default": "1000"
             }
           }
         },
@@ -923,7 +950,7 @@
               "label": "Text"
             },
             "featured_image_info": {
-              "content": "If you include a link in social media posts, the page's featured image will be shown as the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/images\/showing-social-media-thumbnail-images)"
+              "content": "If you include a link in social media posts, the page’s featured image will be shown as the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/images\/showing-social-media-thumbnail-images)"
             },
             "title_info": {
               "content": "A store title and description are included with the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/promoting-marketing\/seo\/adding-keywords#set-a-title-and-description-for-your-online-store)"
@@ -935,37 +962,6 @@
           "settings": {
             "paragraph": {
               "content": "To display a rating, add a product rating app. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/themes\/theme-structure\/theme-features#featured-product-rating)"
-            }
-          }
-        },
-        "area_calculator": {
-          "name": "Area Calculator",
-          "settings": {
-            "show_area_calculator": {
-              "type": "checkbox",
-              "label": "Show area calculator",
-              "default": true,
-              "info": "Enable area calculator for this product"
-            },
-            "min_width": {
-              "type": "number",
-              "label": "Minimum width (cm)",
-              "default": 10
-            },
-            "max_width": {
-              "type": "number",
-              "label": "Maximum width (cm)",
-              "default": 1000
-            },
-            "min_length": {
-              "type": "number",
-              "label": "Minimum length (cm)",
-              "default": 10
-            },
-            "max_length": {
-              "type": "number",
-              "label": "Maximum length (cm)",
-              "default": 1000
             }
           }
         }
@@ -992,7 +988,7 @@
           }
         },
         "hide_variants": {
-          "label": "Hide unselected variants' media on desktop"
+          "label": "Hide unselected variants’ media on desktop"
         },
         "enable_video_looping": {
           "label": "Enable video looping"
@@ -1053,7 +1049,7 @@
         },
         "header__1": {
           "content": "Email Signup",
-          "info": "Subscribers added automatically to your "accepted marketing" customer list. [Learn more](https:\/\/help.shopify.com\/manual\/customers\/manage-customers)"
+          "info": "Subscribers added automatically to your “accepted marketing” customer list. [Learn more](https:\/\/help.shopify.com\/manual\/customers\/manage-customers)"
         },
         "header__2": {
           "content": "Social media icons",
@@ -1727,7 +1723,7 @@
               "label": "Text"
             },
             "featured_image_info": {
-              "content": "If you include a link in social media posts, the page's featured image will be shown as the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/images\/showing-social-media-thumbnail-images)."
+              "content": "If you include a link in social media posts, the page’s featured image will be shown as the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/images\/showing-social-media-thumbnail-images)."
             },
             "title_info": {
               "content": "A store title and description are included with the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/promoting-marketing\/seo\/adding-keywords#set-a-title-and-description-for-your-online-store)."
@@ -2074,6 +2070,37 @@
             }
           }
         },
+        "area_calculator": {
+          "name": "Area Calculator",
+          "settings": {
+            "show_area_calculator": {
+              "type": "checkbox",
+              "label": "Show area calculator",
+              "default": "true",
+              "info": "Enable area calculator for this product"
+            },
+            "min_width": {
+              "type": "number",
+              "label": "Minimum width (cm)",
+              "default": "10"
+            },
+            "max_width": {
+              "type": "number",
+              "label": "Maximum width (cm)",
+              "default": "1000"
+            },
+            "min_length": {
+              "type": "number",
+              "label": "Minimum length (cm)",
+              "default": "10"
+            },
+            "max_length": {
+              "type": "number",
+              "label": "Maximum length (cm)",
+              "default": "1000"
+            }
+          }
+        },
         "pickup_availability": {
           "name": "Pickup availability"
         },
@@ -2104,7 +2131,7 @@
               "label": "Text"
             },
             "featured_image_info": {
-              "content": "If you include a link in social media posts, the page's featured image will be shown as the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/images\/showing-social-media-thumbnail-images)."
+              "content": "If you include a link in social media posts, the page’s featured image will be shown as the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/online-store\/images\/showing-social-media-thumbnail-images)."
             },
             "title_info": {
               "content": "A store title and description are included with the preview image. [Learn more](https:\/\/help.shopify.com\/manual\/promoting-marketing\/seo\/adding-keywords#set-a-title-and-description-for-your-online-store)."
@@ -2371,37 +2398,6 @@
               "label": "Third heading"
             }
           }
-        },
-        "area_calculator": {
-          "name": "Area Calculator",
-          "settings": {
-            "show_area_calculator": {
-              "type": "checkbox",
-              "label": "Show area calculator",
-              "default": true,
-              "info": "Enable area calculator for this product"
-            },
-            "min_width": {
-              "type": "number",
-              "label": "Minimum width (cm)",
-              "default": 10
-            },
-            "max_width": {
-              "type": "number",
-              "label": "Maximum width (cm)",
-              "default": 1000
-            },
-            "min_length": {
-              "type": "number",
-              "label": "Minimum length (cm)",
-              "default": 10
-            },
-            "max_length": {
-              "type": "number",
-              "label": "Maximum length (cm)",
-              "default": 1000
-            }
-          }
         }
       },
       "settings": {
@@ -2488,7 +2484,7 @@
           }
         },
         "hide_variants": {
-          "label": "Hide other variants' media after selecting a variant"
+          "label": "Hide other variants’ media after selecting a variant"
         },
         "enable_video_looping": {
           "label": "Enable video looping"

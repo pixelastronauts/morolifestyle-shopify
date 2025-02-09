@@ -56,6 +56,13 @@
             "show_gift_card_recipient": true
           }
         },
+        "area_calculator": {
+          "type": "area_calculator",
+          "settings": {
+            "show_area_calculator": true,
+            "show_area_calculator_price": true
+          }
+        },
         "description": {
           "type": "description",
           "settings": {}
@@ -120,6 +127,7 @@
         "quantity_selector",
         "easify_options_easify_product_options_mYpULA",
         "buy_buttons",
+        "area_calculator",
         "description",
         "inventory_qnngpg",
         "collapsible-row-0",
