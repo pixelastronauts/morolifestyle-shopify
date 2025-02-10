@@ -1,7 +1,49 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "newsletter_pt4bw8": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_F7VH6a": {
+          "type": "heading",
+          "settings": {
+            "heading": "Schrijf je in voor onze nieuwsbrief",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_zT9X83": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Blijf op de hoogte van alle nieuwe designs en aanbiedingen. Ontvang daarnaast direct <strong>10% korting</strong> op jouw eerste bestelling.</p>"
+          }
+        },
+        "email_form_HraRkL": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_F7VH6a",
+        "paragraph_zT9X83",
+        "email_form_HraRkL"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -23,7 +65,7 @@
           "type": "text",
           "settings": {
             "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
           }
         }
       },
@@ -49,7 +91,7 @@
     }
   },
   "order": [
+    "newsletter_pt4bw8",
     "footer"
   ]
 }
-
