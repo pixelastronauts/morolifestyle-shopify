@@ -49,7 +49,7 @@
         "logo_position": "middle-center",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
-        "sticky_header_type": "reduce-logo-size",
+        "sticky_header_type": "always",
         "show_line_separator": false,
         "color_scheme": "scheme-40f381fe-a5dd-4436-b09e-c6be41353a50",
         "menu_color_scheme": "scheme-1",
