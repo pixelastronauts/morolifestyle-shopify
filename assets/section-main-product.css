@@ -230,6 +230,11 @@
   margin: 2.5rem 0;
 }
 
+.product__description {
+  opacity: 0.5;
+  font-size: 1.5rem;
+}
+
 .product__text {
   margin-bottom: 0;
 }

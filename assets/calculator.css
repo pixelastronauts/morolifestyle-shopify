@@ -15,7 +15,7 @@
 }
 
 #calculator input[type="number"]:focus {
-  @apply outline-none ring-1 ring-moro-500 border-moro-500;
+  @apply outline-none ring-1 ring-tapiz-500 border-tapiz-500;
 }
 
 #calculator input[type="number"]::-webkit-outer-spin-button,

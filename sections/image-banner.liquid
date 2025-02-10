@@ -30,6 +30,14 @@
   }
 {%- endstyle -%}
 
+{% if section.settings.negative_margin_top %}
+  {%- style -%}
+    #Banner-{{ section.id }} {
+      margin-top: calc(-1 * var(--header-height, 97px));
+    }
+  {%- endstyle -%}
+{% endif %}
+
 {%- liquid
   assign full_width = '100vw'
   assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
@@ -340,6 +348,12 @@
         "id": "show_text_below",
         "default": true,
         "label": "t:sections.image-banner.settings.show_text_below.label"
+      },
+      {
+        "type": "checkbox",
+        "id": "negative_margin_top",
+        "default": false,
+        "label": "t:sections.image-banner.settings.negative_margin_top.label"
       }
     ],
     "blocks": [

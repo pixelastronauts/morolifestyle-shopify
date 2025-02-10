@@ -2336,11 +2336,17 @@ product-info .loading__spinner:not(.hidden) ~ *,
   z-index: initial;
 }
 
+/* #MainContent {
+  margin-top: -97px;
+} */
+
 /* Main Header Layout */
 .header-wrapper {
   display: block;
   position: relative;
   background-color: rgb(var(--color-background));
+  margin: 14px;
+  border-radius: 8px;
 }
 
 .header-wrapper--border-bottom {
@@ -2357,6 +2363,9 @@ product-info .loading__spinner:not(.hidden) ~ *,
 @media screen and (max-width: 749px) {
   .header--has-app {
     grid-template-columns: auto 1fr auto;
+  }
+  .header-wrapper {
+    margin: 8px;
   }
 }
 
@@ -3155,7 +3164,10 @@ details-disclosure > details {
 .rte ul,
 .rte ol {
   list-style-position: inside;
-  padding-left: 2rem;
+}
+
+.rte ul {
+  list-style-type: disc;
 }
 
 .rte li {

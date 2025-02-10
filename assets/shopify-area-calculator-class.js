@@ -18,7 +18,8 @@ class AreaCalculator extends HTMLElement {
     this.outputSelectors = {
       area: '[data-total-area]',
       price: '[data-total-price]',
-      originalPrice: '[data-original-price]'
+      originalPrice: '[data-original-price]',
+      totalPriceSpinner: '[data-total-price-spinner]'
     };
 
     // Add translation strings
@@ -48,7 +49,36 @@ class AreaCalculator extends HTMLElement {
 
   async initialize() {
     await this.fetchActiveFormula();
+    this.disableDefaultPriceUpdates();
     this.init();
+  }
+
+  disableDefaultPriceUpdates() {
+    // Find variant selectors
+    const variantSelectors = document.querySelectorAll('variant-selects, variant-radios');
+
+    variantSelectors.forEach(selector => {
+      console.log('selector', selector);
+      // Listen for variant change events
+      selector.addEventListener('change', (event) => {
+        console.log('change', event);
+        // Prevent default price updates by storing original prices
+        const priceElements = document.querySelectorAll('.price__regular .price-item--regular, .price__sale .price-item--sale');
+        priceElements.forEach(element => {
+          console.log('element', element);
+          // Store original price if not already stored
+          let originalPrice = element.innerHTML;
+          if (!element.dataset.originalPrice) {
+            element.dataset.originalPrice = originalPrice;
+          }
+          // Restore original price
+          setTimeout(() => {
+            element.innerHTML = originalPrice;
+            console.log('set timeout element', element);
+          }, 1000);
+        });
+      });
+    });
   }
 
   // Add debounce helper method
@@ -190,6 +220,7 @@ class AreaCalculator extends HTMLElement {
     this.totalPriceOutput = this.querySelector(this.outputSelectors.price);
     this.originalPriceOutput = this.querySelector(this.outputSelectors.originalPrice);
     this.submitButton = document.querySelector('[type="submit"][name="add"]');
+    this.totalPriceSpinner = this.querySelector(this.outputSelectors.totalPriceSpinner);
 
     // Create error message elements
     this.createErrorElements();
@@ -530,6 +561,7 @@ class AreaCalculator extends HTMLElement {
 
     // Update our custom price output
     if (this.totalPriceOutput) {
+      this.totalPriceSpinner.classList.add('hidden');
       this.totalPriceOutput.innerHTML = this.formatMoney(price);
     }
 
@@ -660,7 +692,7 @@ class AreaCalculator extends HTMLElement {
       console.log(`\nAttempt ${currentAttempt + 1} of ${maxAttempts}`);
 
       // Show message after 4th attempt
-      if (currentAttempt >= 2) {
+      if (currentAttempt >= 1) {
         this.createPollingMessage();
       }
 

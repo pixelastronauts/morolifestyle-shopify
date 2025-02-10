@@ -86,7 +86,12 @@
             assign background_color_contrast = background_color | color_darken: 25
           endif
 %}
-
+          --color-primary: {{ scheme.settings.primary.red }}, 
+          {{ scheme.settings.primary.green }}, 
+          {{ scheme.settings.primary.blue }};
+          --color-secondary: {{ scheme.settings.secondary.red }}, 
+          {{ scheme.settings.secondary.green }}, 
+          {{ scheme.settings.secondary.blue }};
           --color-foreground: {{ scheme.settings.text.red }}, 
           {{ scheme.settings.text.green }}, 
           {{ scheme.settings.text.blue }};
@@ -136,7 +141,7 @@
         --font-body-weight: {{ settings.type_body_font.weight }};
         --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
 
-        --font-heading-family: 'El Messiri', 
+        --font-heading-family: {{ settings.type_header_font.family }}, 
         {{ settings.type_header_font.fallback_families }};
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};

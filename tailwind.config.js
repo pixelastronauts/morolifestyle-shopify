@@ -22,7 +22,7 @@ module.exports = {
         heading: 'var(--font-heading-family)',
       },
       colors: {
-        moro: {
+        tapiz: {
           100: "#e3d3d4",
           200: "#c8a7a9",
           300: "#ac7b7f",
@@ -32,6 +32,17 @@ module.exports = {
           700: "#461519",
           800: "#2f0e10",
           900: "#170708"
+        },
+        peach: {
+          100: "#fdefed",
+          200: "#fcdfdb",
+          300: "#faceca",
+          400: "#f9beb8",
+          500: "#f7aea6",
+          600: "#c68b85",
+          700: "#946864",
+          800: "#634642",
+          900: "#312321"
         },
       },
       transitionDuration: {

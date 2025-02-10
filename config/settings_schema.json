@@ -42,6 +42,18 @@
         "definition": [
           {
             "type": "color",
+            "id": "primary",
+            "label": "t:settings_schema.colors.settings.primary.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary",
+            "label": "t:settings_schema.colors.settings.secondary.label",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
             "id": "background",
             "label": "t:settings_schema.colors.settings.background.label",
             "default": "#FFFFFF"

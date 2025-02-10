@@ -1033,6 +1033,9 @@
         "show_text_below": {
           "label": "Container op mobiel weergeven"
         },
+        "negative_margin_top": {
+          "label": "Negatieve bovenmarge inschakelen"
+        },
         "image_height": {
           "label": "Hoogte van de banner",
           "options__1": {

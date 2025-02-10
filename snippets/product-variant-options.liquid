@@ -111,7 +111,7 @@
           src="{{ product.variants[forloop.index0].image | image_url: width: 50 }}"
           alt="{{ value | escape }}"
           width="50"
-          height="50"
+          height="auto"
           loading="lazy">
       {%- else -%}
         <span class="variant-title">{{ value }}</span>

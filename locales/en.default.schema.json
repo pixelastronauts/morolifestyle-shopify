@@ -123,6 +123,12 @@
     "colors": {
       "name": "Colors",
       "settings": {
+        "primary": {
+          "label": "Primary"
+        },
+        "secondary": {
+          "label": "Secondary"
+        },
         "background": {
           "label": "Background"
         },
@@ -1290,6 +1296,9 @@
         },
         "show_text_below": {
           "label": "Show container on mobile"
+        },
+        "negative_margin_top": {
+          "label": "Negative top margin"
         }
       },
       "blocks": {
