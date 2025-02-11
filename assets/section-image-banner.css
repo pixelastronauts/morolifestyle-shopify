@@ -449,6 +449,7 @@
 
 .banner__heading {
   margin-bottom: 0;
+  text-transform: none;
 }
 
 .banner__box .banner__heading + * {

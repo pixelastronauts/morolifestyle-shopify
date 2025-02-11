@@ -58,6 +58,10 @@
   margin-top: 3rem;
 }
 
+.rich-text__heading {
+  text-transform: none;
+}
+
 .rich-text__buttons {
   display: inline-flex;
   justify-content: center;

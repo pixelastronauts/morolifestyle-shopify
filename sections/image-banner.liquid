@@ -118,7 +118,7 @@
               <p>{{ block.settings.text }}</p>
             </div>
           {%- when 'buttons' -%}
-            <div class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}" {{ block.shopify_attributes }}>
+            <div class="banner__buttons {% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.button_label_1 != blank -%}
                 <a
                   {% if block.settings.button_link_1 == blank %}
@@ -128,12 +128,15 @@
                   href="{{ block.settings.button_link_1 }}"
                   {% endif %}
                   class="twcss-gap-4 twcss-group twcss-px-2 button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}">
-                  {% render 'icon-moro-span' %}
+                  {% render 'icon-moro-span'
+                    , class: 'twcss-text-tapiz-500/50' %}
                   <div class="twcss-flex-none">
                     {{- block.settings.button_label_1 | escape -}}
                   </div>
                   {% render 'icon-moro-span'
-                    , counterwise: true %}
+                    , counterwise: true
+                    , flipped: true
+                    , class: 'twcss-text-tapiz-500/50' %}
                 </a>
               {%- endif -%}
               {%- if block.settings.button_label_2 != blank -%}

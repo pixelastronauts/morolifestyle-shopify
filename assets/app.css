@@ -764,10 +764,6 @@ video {
   fill: currentColor;
 }
 
-.twcss-stroke-current {
-  stroke: currentColor;
-}
-
 .twcss-object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -867,6 +863,15 @@ video {
 .twcss-text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.twcss-text-peach-800 {
+  --tw-text-opacity: 1;
+  color: rgb(99 70 66 / var(--tw-text-opacity));
+}
+
+.twcss-text-tapiz-500\/50 {
+  color: rgb(117 35 41 / 0.5);
 }
 
 .twcss-opacity-50 {

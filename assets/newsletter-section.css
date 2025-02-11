@@ -10,6 +10,10 @@
   }
 }
 
+.newsletter__wrapper h2 {
+  text-transform: none;
+}
+
 .newsletter__wrapper > * {
   margin-top: 0;
   margin-bottom: 0;

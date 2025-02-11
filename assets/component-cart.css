@@ -23,6 +23,7 @@ cart-items.is-empty .title-wrapper-with-link,
 
 .cart__empty-text {
   margin: 4.5rem 0 2rem;
+  text-transform: none;
 }
 
 .cart__contents > * + * {

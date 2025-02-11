@@ -1,5 +1,7 @@
 .image-with-text .grid {
   margin-bottom: 0;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .image-with-text .grid__item {
@@ -396,6 +398,7 @@
 
 .image-with-text__heading {
   margin-bottom: 0;
+  text-transform: none;
 }
 
 .image-with-text__text p {

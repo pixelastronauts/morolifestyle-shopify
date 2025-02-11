@@ -141,7 +141,7 @@
         --font-body-weight: {{ settings.type_body_font.weight }};
         --font-body-weight-bold: {{ settings.type_body_font.weight | plus: 300 | at_most: 1000 }};
 
-        --font-heading-family: {{ settings.type_header_font.family }}, 
+        --font-heading-family: 'Ed Nimpkish', 
         {{ settings.type_header_font.fallback_families }};
         --font-heading-style: {{ settings.type_header_font.style }};
         --font-heading-weight: {{ settings.type_header_font.weight }};
@@ -305,6 +305,7 @@ body {
 
     {{ 'app.css' | asset_url | stylesheet_tag }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'fonts.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}

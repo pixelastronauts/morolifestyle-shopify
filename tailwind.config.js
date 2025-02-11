@@ -20,6 +20,7 @@ module.exports = {
     extend: {
       fontFamily: {
         heading: 'var(--font-heading-family)',
+        ednimpkish: ['EDNimpkish', 'sans-serif'],
       },
       colors: {
         tapiz: {
