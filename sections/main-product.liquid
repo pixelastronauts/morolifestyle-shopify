@@ -466,6 +466,12 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+              {%- when 'payment_methods' -%}
+                {%- render 'payment-methods',
+                  block: block,
+                  product: product,
+                  section_id: section.id
+                -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -958,6 +964,19 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+        }
+      ]
+    },
+    {
+      "type": "payment_methods",
+      "name": "Payment methods",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_payment_methods",
+          "default": true,
+          "label": "Show payment methods"
         }
       ]
     },
