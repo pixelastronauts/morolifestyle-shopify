@@ -142,6 +142,69 @@
         "padding_bottom": 12
       }
     },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column-0": {
+          "type": "column",
+          "settings": {
+            "title": "Op maat gemaakt",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_kBxpB9": {
+          "type": "column",
+          "settings": {
+            "title": "gratis verzonden",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column-1": {
+          "type": "column",
+          "settings": {
+            "title": "Niet retourneerbaar",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_3JyNNy": {
+          "type": "column",
+          "settings": {
+            "title": "unieke designs",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column-0",
+        "column_kBxpB9",
+        "column-1",
+        "column_3JyNNy"
+      ],
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "image-with-text": {
       "type": "image-with-text",
       "blocks": {
@@ -180,10 +243,10 @@
         "padding_bottom": 36
       }
     },
-    "multicolumn": {
+    "multicolumn_am83Y6": {
       "type": "multicolumn",
       "blocks": {
-        "column-0": {
+        "column_4UgpJQ": {
           "type": "column",
           "settings": {
             "title": "Gratis verzenden",
@@ -192,7 +255,16 @@
             "link": ""
           }
         },
-        "column-1": {
+        "column_wRYGN9": {
+          "type": "column",
+          "settings": {
+            "title": "Column",
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_A4AyG8": {
           "type": "column",
           "settings": {
             "title": "Op maat gemaakt",
@@ -203,15 +275,16 @@
         }
       },
       "block_order": [
-        "column-0",
-        "column-1"
+        "column_4UgpJQ",
+        "column_wRYGN9",
+        "column_A4AyG8"
       ],
       "settings": {
         "title": "",
         "heading_size": "h1",
         "image_width": "full",
         "image_ratio": "adapt",
-        "columns_desktop": 2,
+        "columns_desktop": 4,
         "column_alignment": "left",
         "background_style": "none",
         "button_label": "",
@@ -244,8 +317,9 @@
   },
   "order": [
     "main",
-    "image-with-text",
     "multicolumn",
+    "image-with-text",
+    "multicolumn_am83Y6",
     "related-products"
   ]
 }
