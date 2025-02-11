@@ -7,7 +7,6 @@
   position: relative;
   margin: 1.25rem;
   border-radius: 8px;
-  background-color: rgba(var(--color-primary));
 }
 
 .collection-hero--with-image .collection-hero__inner {
@@ -88,8 +87,7 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  border: var(--media-border-width) solid
-    rgba(var(--color-foreground), var(--media-border-opacity));
+  opacity: 0.75;
   border-radius: var(--media-radius);
   box-shadow: var(--media-shadow-horizontal-offset)
     var(--media-shadow-vertical-offset) var(--media-shadow-blur-radius)
