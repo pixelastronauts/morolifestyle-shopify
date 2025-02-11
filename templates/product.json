@@ -72,7 +72,7 @@
           "settings": {
             "heading": "Materialen",
             "icon": "leather",
-            "content": "",
+            "content": "<ul><li>Hoogwaardige schoonloopmat van 2 kg/m² met duurzame zwarte TPE-backing van gerecycled materiaal</li><li>Perfecte combinatie van design en functionaliteit</li><li>Geschikt voor alle vloeren, inclusief vloerverwarming</li><li>Hoge antislip waarde voor optimale veiligheid</li><li>Speciaal ontwikkeld voor binnengebruik</li></ul>",
             "page": ""
           }
         },
@@ -81,7 +81,7 @@
           "settings": {
             "heading": "Afmetingen",
             "icon": "ruler",
-            "content": "",
+            "content": "<p>Houd bij het opmeten rekening met ongeveer 5mm speling aan alle kanten. Meet eerst zorgvuldig de beschikbare ruimte op. Wil je helemaal zeker zijn dat de mat past? Bestel dan de mat iets groter dan je nodig hebt. Je kunt hem namelijk heel eenvoudig op maat snijden met een stanleymes. Zo creëer je de perfecte pasvorm voor jouw ruimte.</p>",
             "page": ""
           }
         },
@@ -90,7 +90,7 @@
           "settings": {
             "heading": "Verzorgingsinstructies",
             "icon": "heart",
-            "content": "",
+            "content": "<ul><li>Regelmatig stofzuigen voor optimaal resultaat</li><li>Bij hardnekkige vlekken: handwas met mild reinigingsmiddel</li><li>Laat de mat altijd goed drogen voor gebruik</li></ul>",
             "page": ""
           }
         },
@@ -99,7 +99,7 @@
           "settings": {
             "heading": "Verzenden & retourneren",
             "icon": "truck",
-            "content": "",
+            "content": "<ul><li><strong>Verzenden & retourneren</strong></li><li>Levertijd: 2-3 weken</li><li>Omdat alle matten op maat worden gemaakt, is <span style=\"text-decoration:underline\">retourneren helaas niet mogelijk</span></li><li>Voor een zorgeloze aankoop adviseren wij om vooraf contact op te nemen voor persoonlijk advies</li><li>Standaard gratis verzending binnen Nederland & België</li></ul>",
             "page": ""
           }
         },
@@ -148,14 +148,14 @@
         "image-with-text-0": {
           "type": "heading",
           "settings": {
-            "heading": "Made in Morocco",
+            "heading": "Made in Nederland",
             "heading_size": "h1"
           }
         },
         "image-with-text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Onze producten worden met de hand gemaakt in Marokko. We zorgen ervoor dat we weten waar alles vandaan komt en betalen een eerlijke prijs. Elk item in onze webshop vertelt een uniek verhaal van vakmanschap en traditie, zodat jij iets bijzonders en authentieks krijgt.</p>",
+            "text": "<p>Onze design schoonloopmatten worden met zorg geproduceerd in Nederland. In ons gespecialiseerde productieatelier wordt elk ontwerp met precisie geprint en afgewerkt. Door lokaal te produceren garanderen we niet alleen de hoogste kwaliteit, maar houden we ook onze ecologische voetafdruk beperkt. Elke mat wordt voor verzending handmatig gecontroleerd.</p>",
             "text_style": "body"
           }
         }
@@ -165,7 +165,7 @@
         "image-with-text-1"
       ],
       "settings": {
-        "image": "shopify://shop_images/Fringe-hanglamp-1.jpg",
+        "image": "shopify://shop_images/447403133_17863786392150547_8916469884258253891_n.jpg",
         "height": "medium",
         "desktop_image_width": "medium",
         "layout": "text_first",
@@ -187,7 +187,7 @@
           "type": "column",
           "settings": {
             "title": "Gratis verzenden",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "text": "<p>Binnen Nederland en België verzenden we je mat gratis. Je ontvangt een track & trace code zodra je bestelling onderweg is. Voor andere landen kunnen de verzendkosten verschillen.</p>",
             "link_label": "",
             "link": ""
           }
@@ -195,8 +195,8 @@
         "column-1": {
           "type": "column",
           "settings": {
-            "title": "Probleemloos retourneren",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "Op maat gemaakt",
+            "text": "<p>We maken elke schoonloopmat speciaal voor jou, precies volgens jouw specificaties. Door dit maatwerk is iedere mat uniek en kunnen we deze helaas niet retourneren. Wil je zeker zijn van je keuze? Neem dan gerust contact met ons op voor advies.</p>",
             "link_label": "",
             "link": ""
           }
