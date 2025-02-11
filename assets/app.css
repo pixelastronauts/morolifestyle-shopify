@@ -654,6 +654,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.twcss-ml-1 {
+  margin-left: 0.25rem;
+}
+
 .twcss-flex {
   display: flex;
 }
@@ -673,6 +677,11 @@ video {
 .twcss-size-4 {
   width: 1rem;
   height: 1rem;
+}
+
+.twcss-size-6 {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .twcss-w-4 {

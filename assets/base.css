@@ -2075,7 +2075,7 @@ product-info .loading__spinner:not(.hidden) ~ *,
 
 .cart-count-bubble {
   position: absolute;
-  background-color: rgb(var(--color-button));
+  background-color: rgb(var(--color-primary));
   color: rgb(var(--color-button-text));
   height: 1.7rem;
   width: 1.7rem;

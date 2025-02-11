@@ -12,15 +12,11 @@
         {%- if link.links != blank -%}
           <header-menu>
             <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
-              <summary
-                id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
-              >
+              <summary id="HeaderMenu-{{ link.handle }}" class="header__menu-item list-menu__item link focus-inset">
                 <span
                   {%- if link.child_active %}
-                    class="header__active-menu-item"
-                  {% endif %}
-                >
+                  class="header__active-menu-item"
+                  {% endif %}>
                   {{- link.title | escape -}}
                 </span>
                 {% render 'icon-caret' %}
@@ -28,43 +24,144 @@
               <div
                 id="MegaMenu-Content-{{ forloop.index }}"
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
-                tabindex="-1"
-              >
-                <ul
-                  class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
-                  role="list"
-                >
-                  {%- for childlink in link.links -%}
-                    <li>
-                      <a
-                        id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
-                        href="{{ childlink.url }}"
-                        class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
-                        {% if childlink.current %}
-                          aria-current="page"
-                        {% endif %}
-                      >
-                        {{ childlink.title | escape }}
-                      </a>
-                      {%- if childlink.links != blank -%}
-                        <ul class="list-unstyled" role="list">
-                          {%- for grandchildlink in childlink.links -%}
-                            <li>
-                              <a
-                                id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
-                                href="{{ grandchildlink.url }}"
-                                class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
-                                {% if grandchildlink.current %}
-                                  aria-current="page"
-                                {% endif %}
-                              >
-                                {{ grandchildlink.title | escape }}
-                              </a>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      {%- endif -%}
-                    </li>
+                tabindex="-1">
+                <ul class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}" role="list">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'mega-menu-image' and block.settings.menu_title == link.title and block.settings.position == 'before' -%}
+                      <li class="mega-menu__image-wrapper column-{{ block.settings.column_width }}" data-ratio="{{ block.settings.aspect_ratio }}">
+                        {%- if block.settings.link != blank -%}
+                          <a href="{{ block.settings.link }}">
+                        {%- endif -%}
+                        {%- if block.settings.image != blank -%}
+                          {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'mega-menu__image', alt: block.settings.title | escape
+                          }}
+                        {%- endif -%}
+                        {%- if block.settings.title != blank -%}
+                          <div class="mega-menu__image-title button button--secondary">
+                            {{ block.settings.title | escape }}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="twcss-size-6">
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.link != blank -%}
+                          </a>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  <li class="mega-menu__items-wrapper">
+                    <ul class="list-unstyled" role="list">
+                      {%- for childlink in link.links -%}
+                        <li>
+                          <a
+                            id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                            href="{{ childlink.url }}"
+                            class="mega-menu__link mega-menu__link--level-2 link{% if childlink.current %} mega-menu__link--active{% endif %}"
+                            {% if childlink.current %}
+                            aria-current="page"
+                            {% endif %}>
+                            {{ childlink.title | escape }}
+                          </a>
+                          {%- if childlink.links != blank -%}
+                            <ul class="list-unstyled" role="list">
+                              {%- for grandchildlink in childlink.links -%}
+                                <li>
+                                  <a
+                                    id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                    href="{{ grandchildlink.url }}"
+                                    class="mega-menu__link link{% if grandchildlink.current %} mega-menu__link--active{% endif %}"
+                                    {% if grandchildlink.current %}
+                                    aria-current="page"
+                                    {% endif %}>
+                                    {{ grandchildlink.title | escape }}
+                                  </a>
+                                </li>
+                              {%- endfor -%}
+                            </ul>
+                          {%- endif -%}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </li>
+
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'mega-menu-image' and block.settings.menu_title == link.title and block.settings.position == 'after' -%}
+                      <li class="mega-menu__image-wrapper column-{{ block.settings.column_width }}" data-ratio="{{ block.settings.aspect_ratio }}">
+                        {%- if block.settings.link != blank -%}
+                          <a href="{{ block.settings.link }}">
+                        {%- endif -%}
+                        {%- if block.settings.image != blank -%}
+                          {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'mega-menu__image', alt: block.settings.title | escape
+                          }}
+                        {%- endif -%}
+                        {%- if block.settings.title != blank -%}
+                          <div class="mega-menu__image-title button button--secondary">
+                            {{ block.settings.title | escape }}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="twcss-size-6 twcss-ml-1">
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.link != blank -%}
+                          </a>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- comment -%}End positioned images{%- endcomment -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'mega-menu-image' and block.settings.menu_title == link.title and block.settings.position == 'end' -%}
+                      <li class="mega-menu__image-wrapper mega-menu__image-wrapper--end column-{{ block.settings.column_width }}" data-ratio="{{ block.settings.aspect_ratio }}">
+                        {%- if block.settings.link != blank -%}
+                          <a href="{{ block.settings.link }}">
+                        {%- endif -%}
+                        {%- if block.settings.image != blank -%}
+                          {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'mega-menu__image', alt: block.settings.title | escape
+                          }}
+                        {%- endif -%}
+                        {%- if block.settings.title != blank -%}
+                          <div class="mega-menu__image-title button button--secondary">
+                            {{ block.settings.title | escape }}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="twcss-size-6">
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.link != blank -%}
+                          </a>
+                        {%- endif -%}
+                      </li>
+                    {%- endif -%}
                   {%- endfor -%}
                 </ul>
               </div>
@@ -76,14 +173,12 @@
             href="{{ link.url }}"
             class="header__menu-item list-menu__item link link--text focus-inset"
             {% if link.current %}
-              aria-current="page"
-            {% endif %}
-          >
+            aria-current="page"
+            {% endif %}>
             <span
               {%- if link.current %}
-                class="header__active-menu-item"
-              {% endif %}
-            >
+              class="header__active-menu-item"
+              {% endif %}>
               {{- link.title | escape -}}
             </span>
           </a>

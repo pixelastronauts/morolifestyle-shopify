@@ -745,6 +745,102 @@
     ],
     "blocks": [
       {
+        "type": "mega-menu-image",
+        "name": "Mega Menu Image",
+        "limit": 3,
+        "settings": [
+          {
+            "type": "text",
+            "id": "menu_title",
+            "label": "Menu Title",
+            "info": "Enter the exact menu item title under which this image should appear"
+          },
+          {
+            "type": "select",
+            "id": "position",
+            "label": "Image Position",
+            "options": [
+              {
+                "value": "before",
+                "label": "Before Menu Items"
+              },
+              {
+                "value": "after",
+                "label": "After Menu Items"
+              },
+              {
+                "value": "end",
+                "label": "At End (Last Column)"
+              }
+            ],
+            "default": "after"
+          },
+          {
+            "type": "select",
+            "id": "column_width",
+            "label": "Column Width",
+            "options": [
+              {
+                "value": "1",
+                "label": "1 Column"
+              },
+              {
+                "value": "2",
+                "label": "2 Columns"
+              },
+              {
+                "value": "3",
+                "label": "3 Columns"
+              }
+            ],
+            "default": "1"
+          },
+          {
+            "type": "select",
+            "id": "aspect_ratio",
+            "label": "Image Aspect Ratio",
+            "options": [
+              {
+                "value": "auto",
+                "label": "Original Image Ratio"
+              },
+              {
+                "value": "square",
+                "label": "Square (1:1)"
+              },
+              {
+                "value": "portrait",
+                "label": "Portrait (2:3)"
+              },
+              {
+                "value": "landscape",
+                "label": "Landscape (3:2)"
+              },
+              {
+                "value": "wide",
+                "label": "Wide (16:9)"
+              }
+            ],
+            "default": "auto"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+        ]
+      },
+      {
         "type": "@app"
       }
     ]
