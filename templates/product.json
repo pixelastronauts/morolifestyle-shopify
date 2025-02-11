@@ -67,6 +67,12 @@
             "show_inventory_quantity": true
           }
         },
+        "payment_methods_MGWLQp": {
+          "type": "payment_methods",
+          "settings": {
+            "show_payment_methods": true
+          }
+        },
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
@@ -120,6 +126,7 @@
         "area_calculator",
         "buy_buttons",
         "inventory_qnngpg",
+        "payment_methods_MGWLQp",
         "collapsible-row-0",
         "collapsible-row-2",
         "collapsible-row-3",
