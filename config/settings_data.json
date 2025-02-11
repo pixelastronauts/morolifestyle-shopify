@@ -156,7 +156,7 @@
       "scheme-1": {
         "settings": {
           "primary": "#56112a",
-          "secondary": "#FFFFFF",
+          "secondary": "#ffffff",
           "background": "#ffffff",
           "background_gradient": "",
           "text": "#250505",
@@ -168,8 +168,8 @@
       },
       "scheme-2": {
         "settings": {
-          "primary": "#FFFFFF",
-          "secondary": "#FFFFFF",
+          "primary": "#ffffff",
+          "secondary": "#ffffff",
           "background": "#f3f3f3",
           "background_gradient": "",
           "text": "#121212",
@@ -181,8 +181,8 @@
       },
       "scheme-3": {
         "settings": {
-          "primary": "#FFFFFF",
-          "secondary": "#FFFFFF",
+          "primary": "#ffffff",
+          "secondary": "#ffffff",
           "background": "#242833",
           "background_gradient": "",
           "text": "#ffffff",
@@ -194,8 +194,8 @@
       },
       "scheme-4": {
         "settings": {
-          "primary": "#FFFFFF",
-          "secondary": "#FFFFFF",
+          "primary": "#ffffff",
+          "secondary": "#ffffff",
           "background": "#121212",
           "background_gradient": "",
           "text": "#ffffff",
@@ -207,8 +207,8 @@
       },
       "scheme-5": {
         "settings": {
-          "primary": "#FFFFFF",
-          "secondary": "#FFFFFF",
+          "primary": "#ffffff",
+          "secondary": "#ffffff",
           "background": "#334fb4",
           "background_gradient": "",
           "text": "#ffffff",
@@ -220,8 +220,8 @@
       },
       "scheme-55641035-6d04-41ed-92cd-63bba70f1366": {
         "settings": {
-          "primary": "#FFFFFF",
-          "secondary": "#FFFFFF",
+          "primary": "#ffffff",
+          "secondary": "#ffffff",
           "background": "#f7aea6",
           "background_gradient": "",
           "text": "#56112a",
@@ -233,8 +233,8 @@
       },
       "scheme-40f381fe-a5dd-4436-b09e-c6be41353a50": {
         "settings": {
-          "primary": "#FFFFFF",
-          "secondary": "#FFFFFF",
+          "primary": "#f7aea6",
+          "secondary": "#ffffff",
           "background": "#56112a",
           "background_gradient": "",
           "text": "#f5f0e9",
