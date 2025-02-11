@@ -2346,7 +2346,7 @@ product-info .loading__spinner:not(.hidden) ~ *,
   display: block;
   position: relative;
   background-color: rgb(var(--color-background));
-  margin: 14px;
+  margin: 1.25rem;
   border-radius: 8px;
 }
 
@@ -2577,7 +2577,7 @@ product-info .loading__spinner:not(.hidden) ~ *,
   width: 100%;
   display: block;
   position: absolute;
-  background: rgba(var(--color-foreground), 0.5);
+  /* background: rgba(var(--color-foreground), 0.5); */
 }
 
 .header__icon--account shop-user-avatar {
