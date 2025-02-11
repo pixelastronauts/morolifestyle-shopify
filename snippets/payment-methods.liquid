@@ -1,9 +1,22 @@
-<div class="footer__payment">
-  <ul class="list list-payment" role="list">
-    {%- for type in shop.enabled_payment_types -%}
-      <li class="list-payment__item">
-        {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-      </li>
-    {%- endfor -%}
+<div>
+  <ul class="list list-payment list-payment__product" role="list">
+    <li class="list-payment__item">
+      {{ 'ideal' | payment_type_svg_tag: class: 'icon icon--full-color' }}
+    </li>
+    <li class="list-payment__item">
+      {{ 'klarna' | payment_type_svg_tag: class: 'icon icon--full-color' }}
+    </li>
+    <li class="list-payment__item">
+      {{ 'billie' | payment_type_svg_tag: class: 'icon icon--full-color' }}
+    </li>
+    <li class="list-payment__item">
+      {{ 'master' | payment_type_svg_tag: class: 'icon icon--full-color' }}
+    </li>
+    <li class="list-payment__item">
+      {{ 'visa' | payment_type_svg_tag: class: 'icon icon--full-color' }}
+    </li>
+    <li class="list-payment__item">
+      {{ 'american_express' | payment_type_svg_tag: class: 'icon icon--full-color' }}
+    </li>
   </ul>
 </div>

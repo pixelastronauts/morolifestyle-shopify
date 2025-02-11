@@ -150,12 +150,12 @@ variant-selects {
   align-items: center;
   gap: 0.5rem;
   border-radius: 4px !important;
-  padding: 0.5rem 1rem !important;
+  padding: 0.5rem !important;
 }
 
 .variant-image-label img {
-  width: 50px;
-  height: 50px;
+  width: 4rem;
+  aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: 4px !important;
 }

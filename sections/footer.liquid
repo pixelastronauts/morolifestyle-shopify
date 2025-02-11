@@ -270,7 +270,7 @@
           <localization-form>
             {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
               <div>
-                <h2 class="caption-large text-body" id="FooterLanguageLabel">
+                <h2 class="caption-large text-body twcss-capitalize" id="FooterLanguageLabel">
                   {{ 'localization.language_label' | t }}
                 </h2>
                 {%- render 'language-localization', localPosition: 'FooterLanguage' -%}
@@ -283,13 +283,7 @@
         {%- if section.settings.payment_enable -%}
           <div class="footer__payment">
             <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
-            <ul class="list list-payment" role="list">
-              {%- for type in shop.enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
-              {%- endfor -%}
-            </ul>
+            {% render 'payment-methods' %}
           </div>
         {%- endif -%}
       </div>

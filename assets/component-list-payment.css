@@ -7,6 +7,10 @@
   padding-left: 0;
 }
 
+.list-payment.list-payment__product {
+  justify-content: start;
+}
+
 @media screen and (min-width: 750px) {
   .list-payment {
     justify-content: flex-end;

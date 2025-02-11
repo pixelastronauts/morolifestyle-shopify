@@ -55,6 +55,7 @@
 .mega-menu__link--level-2 {
   font-size: calc(var(--font-heading-scale) * 1.7rem);
   font-family: var(--font-heading-family);
+  color: rgb(var(--color-primary));
   text-transform: lowercase;
 }
 
@@ -72,7 +73,7 @@
 
 .mega-menu__link:hover,
 .mega-menu__link--active {
-  color: rgb(var(--color-foreground));
+  color: rgba(var(--color-primary));
   text-decoration: underline;
 }
 
