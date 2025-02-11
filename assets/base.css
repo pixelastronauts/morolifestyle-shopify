@@ -578,6 +578,7 @@ details > * {
   --duration-extra-longer: 750ms;
   --duration-extended: 3s;
   --ease-out-slow: cubic-bezier(0, 0, 0.3, 1);
+  --ease-out-quartz: cubic-bezier(0.76, 0, 0.24, 1);
   --animation-slide-in: slideIn var(--duration-extra-long) var(--ease-out-slow)
     forwards;
   --animation-fade-in: fadeIn var(--duration-extra-long) var(--ease-out-slow);
@@ -2633,7 +2634,7 @@ menu-drawer + .header__search {
 
 details[open] > .search-modal {
   opacity: 1;
-  animation: animateMenuOpen var(--duration-default) ease;
+  animation: animateMenuOpen var(--duration-long) var(--ease-out-quartz);
 }
 
 details[open] .modal-overlay {
@@ -2657,6 +2658,7 @@ details[open] .modal-overlay::after {
     100% + var(--inputs-margin-offset) + (2 * var(--inputs-border-width))
   );
   height: 100%;
+  border-radius: 8px;
 }
 
 .search-modal__content {

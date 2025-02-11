@@ -4,9 +4,8 @@
 
 .mega-menu__content {
   background-color: rgb(var(--color-background));
-  border-left: 0;
+  border: 0;
   border-radius: 8px;
-  border-right: 0;
   left: 0;
   overflow-y: auto;
   padding-bottom: 3rem;
@@ -38,7 +37,7 @@
 .mega-menu__list {
   display: grid;
   gap: 1.8rem 4rem;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   list-style: none;
 }
 
@@ -54,7 +53,9 @@
 }
 
 .mega-menu__link--level-2 {
-  font-weight: bold;
+  font-size: calc(var(--font-heading-scale) * 1.7rem);
+  font-family: var(--font-heading-family);
+  text-transform: lowercase;
 }
 
 .header--top-center .mega-menu__list {

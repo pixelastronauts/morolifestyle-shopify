@@ -41,7 +41,7 @@
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
-  transition: transform var(--duration-long) cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform var(--duration-long) var(--ease-out-quartz);
   border-radius: 8px;
 }
 
