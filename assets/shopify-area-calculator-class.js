@@ -653,14 +653,14 @@ class AreaCalculator extends HTMLElement {
     });
   }
 
-  createPollingMessage() {
+  createPollingMessage($message) {
     // Remove any existing message first
     this.removePollingMessage();
 
     const messageDiv = document.createElement('div');
     messageDiv.id = 'polling-message';
     messageDiv.className = 'twcss-text-sm twcss-text-gray-600 twcss-mt-2 twcss-text-center';
-    messageDiv.innerHTML = 'Even geduld, we zijn jouw product op maat aan het berekenen...';
+    messageDiv.innerHTML = $message;
 
     const submitButton = this.submitButton;
     if (submitButton && submitButton.parentNode) {
@@ -692,8 +692,16 @@ class AreaCalculator extends HTMLElement {
       console.log(`\nAttempt ${currentAttempt + 1} of ${maxAttempts}`);
 
       // Show message after 4th attempt
-      if (currentAttempt >= 1) {
-        this.createPollingMessage();
+      if (currentAttempt === 1) {
+        this.createPollingMessage('Even geduld, we zijn jouw product op maat aan het berekenen...');
+      }
+
+      if (currentAttempt === 2) {
+        this.createPollingMessage('We zijn bijna klaar met het berekenen van jouw product op maat...');
+      }
+
+      if (currentAttempt === 3) {
+        this.createPollingMessage('Nog heel even geduld, we zijn bijna klaar...');
       }
 
       // Check if current data has zero prices

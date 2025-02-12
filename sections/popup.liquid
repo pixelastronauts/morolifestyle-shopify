@@ -1,0 +1,384 @@
+{{ 'component-popup.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .popup-section {
+    display: block;
+  }
+{%- endstyle -%}
+
+<popup-section
+  class="popup-section"
+  data-popup-frequency="{{ section.settings.popup_frequency }}"
+  data-popup-delay="{{ section.settings.popup_delay }}">
+  <div class="popup-overlay" data-popup-overlay>
+    <div class="popup-container color-{{ section.settings.color_scheme }} gradient popup-size-{{ section.settings.popup_size }}" data-popup-container>
+      <button
+        type="button"
+        class="popup-close"
+        data-popup-close>
+        {% render 'icon-close' %}
+      </button>
+
+      {% case section.settings.layout %}
+        {% when 'split' %}
+          <div class="popup-grid">
+            <div class="popup-image-container">
+              {%- if section.settings.image -%}
+                {{ section.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'popup-image rounded-left' }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'popup-image rounded-left' }}
+              {%- endif -%}
+            </div>
+            <div class="popup-content">
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when 'heading' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- if block.settings.heading != blank -%}
+                        <h2 class="popup-heading">{{ block.settings.heading }}</h2>
+                      {%- endif -%}
+                      {%- if block.settings.subheading != blank -%}
+                        <p class="popup-subheading">{{ block.settings.subheading }}</p>
+                      {%- endif -%}
+                    </div>
+                  {%- when 'text' -%}
+                    <div class="popup-text" {{ block.shopify_attributes }}>
+                      {{ block.settings.text }}
+                    </div>
+                  {%- when 'button' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+                        <a href="{{ block.settings.button_link }}" class="popup-button">
+                          {{ block.settings.button_label }}
+                        </a>
+                      {%- endif -%}
+                    </div>
+                  {%- when 'newsletter' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- form 'customer'
+                        , class: 'popup-newsletter-form' -%}
+                        {%- if block.settings.heading -%}
+                          <h2 class="popup-heading">{{ block.settings.heading }}</h2>
+                        {%- endif -%}
+                        {%- if block.settings.text -%}
+                          <div class="popup-text">{{ block.settings.text }}</div>
+                        {%- endif -%}
+                        {%- if form.errors -%}
+                          <div class="popup-error">{{ form.errors | default_errors }}</div>
+                        {%- endif -%}
+                        <div class="popup-newsletter-form">
+                          <input
+                            type="hidden"
+                            name="contact[tags]"
+                            value="newsletter">
+                          <input
+                            type="email"
+                            name="contact[email]"
+                            class="popup-newsletter-input"
+                            placeholder="{{ 'newsletter.label' | t }}"
+                            required>
+                          <button type="submit" class="popup-button">
+                            {{ 'newsletter.button_label' | t }}
+                          </button>
+                        </div>
+                      {%- endform -%}
+                    </div>
+                  {%- when 'custom_html' -%}
+                    <div {{ block.shopify_attributes }}>
+                      {{ block.settings.custom_html }}
+                    </div>
+                  {%- when 'disclaimer' -%}
+                    <div class="popup-disclaimer" {{ block.shopify_attributes }}>
+                      {{ block.settings.text }}
+                    </div>
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+        {% when 'full_width' %}
+          {% if section.settings.image %}
+            <div class="popup-image-container aspect-video">
+              {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'popup-image rounded-top' }}
+            </div>
+          {% endif %}
+          <div class="popup-content content-{{ section.settings.content_alignment }}">
+            {%- for block in section.blocks -%}
+              {%- case block.type -%}
+                {%- when 'heading' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {%- if block.settings.heading != blank -%}
+                      <h2 class="popup-heading">{{ block.settings.heading }}</h2>
+                    {%- endif -%}
+                    {%- if block.settings.subheading != blank -%}
+                      <p class="popup-subheading">{{ block.settings.subheading }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- when 'text' -%}
+                  <div class="popup-text" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </div>
+                {%- when 'button' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+                      <a href="{{ block.settings.button_link }}" class="popup-button">
+                        {{ block.settings.button_label }}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                {%- when 'newsletter' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {%- form 'customer'
+                      , class: 'popup-newsletter-form' -%}
+                      {%- if block.settings.heading -%}
+                        <h2 class="popup-heading">{{ block.settings.heading }}</h2>
+                      {%- endif -%}
+                      {%- if block.settings.text -%}
+                        <div class="popup-text">{{ block.settings.text }}</div>
+                      {%- endif -%}
+                      {%- if form.errors -%}
+                        <div class="popup-error">{{ form.errors | default_errors }}</div>
+                      {%- endif -%}
+                      <div class="popup-newsletter-form">
+                        <input
+                          type="hidden"
+                          name="contact[tags]"
+                          value="newsletter">
+                        <input
+                          type="email"
+                          name="contact[email]"
+                          class="popup-newsletter-input"
+                          placeholder="{{ 'newsletter.label' | t }}"
+                          required>
+                        <button type="submit" class="popup-button">
+                          {{ 'newsletter.button_label' | t }}
+                        </button>
+                      </div>
+                    {%- endform -%}
+                  </div>
+                {%- when 'custom_html' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {{ block.settings.custom_html }}
+                  </div>
+                {%- when 'disclaimer' -%}
+                  <div class="popup-disclaimer" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+          </div>
+      {% endcase %}
+    </div>
+  </div>
+</popup-section>
+
+{{ 'popup.js' | asset_url | script_tag }}
+
+{% schema %}
+  {
+    "name": "Popup",
+    "tag": "section",
+    "class": "popup-section",
+    "settings": [
+      {
+        "type": "select",
+        "id": "content_alignment",
+        "label": "Content alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ],
+        "default": "left"
+      },
+      {
+        "type": "select",
+        "id": "popup_size",
+        "label": "Popup size",
+        "options": [
+          {
+            "value": "md",
+            "label": "Medium (48rem)"
+          },
+          {
+            "value": "lg",
+            "label": "Large (72rem)"
+          },
+          {
+            "value": "xl",
+            "label": "Extra Large (var(--page-width))"
+          }
+        ],
+        "default": "lg"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_scheme",
+        "label": "t:sections.all.colors.label",
+        "default": "scheme-1"
+      },
+      {
+        "type": "select",
+        "id": "popup_frequency",
+        "label": "Show popup",
+        "options": [
+          {
+            "value": "once_per_day",
+            "label": "Once per day"
+          },
+          {
+            "value": "once_per_session",
+            "label": "Once per session"
+          },
+          {
+            "value": "always",
+            "label": "Every time"
+          }
+        ],
+        "default": "once_per_day"
+      },
+      {
+        "type": "range",
+        "id": "popup_delay",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "sec",
+        "label": "Delay before showing",
+        "default": 5
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "options": [
+          {
+            "value": "split",
+            "label": "Split (Image Left)"
+          },
+          {
+            "value": "full_width",
+            "label": "Full Width (Image Top)"
+          }
+        ],
+        "default": "split"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "heading",
+        "name": "Heading",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Popup Title"
+          },
+          {
+            "type": "text",
+            "id": "subheading",
+            "label": "Subheading"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "name": "Button",
+        "settings": [
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label",
+            "default": "Button"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button link"
+          }
+        ]
+      },
+      {
+        "type": "newsletter",
+        "name": "Newsletter Signup",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Subscribe to our newsletter"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      },
+      {
+        "type": "custom_html",
+        "name": "Custom HTML",
+        "settings": [
+          {
+            "type": "html",
+            "id": "custom_html",
+            "label": "Custom HTML"
+          }
+        ]
+      },
+      {
+        "type": "disclaimer",
+        "name": "Disclaimer",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>By signing up, you agree to receive email marketing</p>"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Popup",
+        "settings": {
+          "layout": "split"
+        },
+        "blocks": [
+          {
+            "type": "heading"
+          },
+          {
+            "type": "text"
+          },
+          {
+            "type": "button"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
