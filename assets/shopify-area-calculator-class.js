@@ -197,6 +197,8 @@ class AreaCalculator extends HTMLElement {
         })
       });
 
+      console.log('response', response);
+
       const result = await response.json();
       if (result.error) {
         throw new Error(result.error);
@@ -225,30 +227,40 @@ class AreaCalculator extends HTMLElement {
     // Create error message elements
     this.createErrorElements();
 
-    // Prefill inputs with minimum values from formula ranges if available
+    // Only set default values if inputs are empty or zero
     if (this.activeFormula && this.activeFormula.value_ranges.length > 0) {
       const minRange = this.activeFormula.value_ranges[0];
 
-      if (this.lengthInput) {
+      if (this.lengthInput && (!this.lengthInput.value || parseFloat(this.lengthInput.value) === 0)) {
         this.lengthInput.value = minRange.start;
+        this.inputsInteracted.length = true;
+      } else if (this.lengthInput && this.lengthInput.value) {
+        // If there's an existing value, mark as interacted
         this.inputsInteracted.length = true;
       }
 
-      if (this.widthInput) {
+      if (this.widthInput && (!this.widthInput.value || parseFloat(this.widthInput.value) === 0)) {
         this.widthInput.value = minRange.start;
+        this.inputsInteracted.width = true;
+      } else if (this.widthInput && this.widthInput.value) {
+        // If there's an existing value, mark as interacted
         this.inputsInteracted.width = true;
       }
     } else {
-      // Fallback to input min attributes if no formula ranges
-      if (this.lengthInput) {
+      // Fallback to input min attributes if no formula ranges, but only if inputs are empty or zero
+      if (this.lengthInput && (!this.lengthInput.value || parseFloat(this.lengthInput.value) === 0)) {
         const minLength = parseFloat(this.lengthInput.min) || 0;
         this.lengthInput.value = minLength;
         this.inputsInteracted.length = true;
+      } else if (this.lengthInput && this.lengthInput.value) {
+        this.inputsInteracted.length = true;
       }
 
-      if (this.widthInput) {
+      if (this.widthInput && (!this.widthInput.value || parseFloat(this.widthInput.value) === 0)) {
         const minWidth = parseFloat(this.widthInput.min) || 0;
         this.widthInput.value = minWidth;
+        this.inputsInteracted.width = true;
+      } else if (this.widthInput && this.widthInput.value) {
         this.inputsInteracted.width = true;
       }
     }
@@ -474,6 +486,9 @@ class AreaCalculator extends HTMLElement {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
           },
           body: JSON.stringify({
             sections: sections,
@@ -719,8 +734,8 @@ class AreaCalculator extends HTMLElement {
         return currentData;
       }
 
-      // Exponential backoff delay: 500ms, 1000ms, 2000ms, 4000ms, 8000ms
-      const delay = Math.min(500 * Math.pow(2, currentAttempt), 8000);
+      // Linear delay: 500ms, 1000ms, 1500ms, 2000ms, 2500ms
+      const delay = Math.min(500 * (currentAttempt + 1), 5000);
       console.log(`Waiting ${delay}ms before next attempt...`);
       await new Promise(resolve => setTimeout(resolve, delay));
 
@@ -731,6 +746,9 @@ class AreaCalculator extends HTMLElement {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
           },
           body: JSON.stringify({
             sections: sections,
