@@ -64,7 +64,7 @@
           "settings": {
             "text_style": "uppercase",
             "inventory_threshold": 10,
-            "show_inventory_quantity": true
+            "show_inventory_quantity": false
           }
         },
         "payment_methods_MGWLQp": {
