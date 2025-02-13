@@ -12,10 +12,8 @@ if (!customElements.get('popup-section')) {
 
             console.log('Popup initialized');
 
-            // Always show popup in editor mode, otherwise check conditions
-            if (Shopify.designMode) {
-                this.showPopup();
-            } else {
+            // Only check conditions for non-editor mode
+            if (!Shopify.designMode) {
                 this.checkAndShowPopup();
             }
         }
@@ -57,18 +55,17 @@ if (!customElements.get('popup-section')) {
                 }
             });
 
-            // Re-show popup when section is reloaded in editor
+            // Only show popup when section is selected in editor
             if (Shopify.designMode) {
-                document.addEventListener('shopify:section:load', (event) => {
+                document.addEventListener('shopify:section:select', (event) => {
                     if (event.target.contains(this)) {
                         this.showPopup();
                     }
                 });
 
-                // Show popup when section is selected in editor
-                document.addEventListener('shopify:section:select', (event) => {
+                document.addEventListener('shopify:section:deselect', (event) => {
                     if (event.target.contains(this)) {
-                        this.showPopup();
+                        this.hidePopup();
                     }
                 });
             }
