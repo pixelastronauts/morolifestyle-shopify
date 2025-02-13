@@ -138,6 +138,17 @@
       "ms-smtprice-sec": {
         "type": "ms-smtprice-sec",
         "settings": {}
+      },
+      "popup": {
+        "type": "popup",
+        "settings": {
+          "content_alignment": "left",
+          "popup_size": "lg",
+          "color_scheme": "",
+          "popup_frequency": "once_per_day",
+          "popup_delay": 5,
+          "layout": "split"
+        }
       }
     },
     "content_for_index": [],
@@ -152,10 +163,14 @@
         "disabled": true,
         "settings": {}
       },
-      "11532412952436166569": {
-        "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+      "13440586637131102011": {
+        "type": "shopify://apps/tinycookie/blocks/cookie-embed/b65baef5-7248-4353-8fd9-b676240311dc",
         "disabled": false,
-        "settings": {}
+        "settings": {
+          "custom_css": "",
+          "hide_in_theme_editor": false,
+          "hide_in_password_page": false
+        }
       }
     },
     "color_schemes": {
