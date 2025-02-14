@@ -1,5 +1,5 @@
 {% if block.settings.show_area_calculator %}
-  <div class="area-calculator-wrapper">
+  <div class="area-calculator-wrapper" {{ block.shopify_attributes }}>
     <area-calculator
       data-base-price="{{ product.price }}"
       data-product-id="{{ product.id }}"
