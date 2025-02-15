@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Ed Nimpkish';
-  src: url('/assets/EDNimpkish-Regular.woff2') format('woff2'),
-       url('/assets/EDNimpkish-Regular.woff') format('woff');
+  src: url('EDNimpkish-Regular.woff2') format('woff2'),
+       url('EDNimpkish-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
