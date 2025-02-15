@@ -92,13 +92,48 @@
               </div>
             {%- when 'product' -%}
               {%- assign placeholder_image = 'product-apparel-' | append: placeholder_image_index -%}
-              {% render 'card-product',
-                card_product: block.settings.product,
-                media_aspect_ratio: 'adapt',
-                show_secondary_image: block.settings.second_image,
-                extend_height: true,
-                placeholder_image: placeholder_image
-              %}
+              {%- liquid
+                assign option_chosen = "Color"
+                assign option_index = ''
+                for option in block.settings.product.options
+                  if option_chosen == option
+                    assign option_index = forloop.index0
+                    break
+                  endif
+                endfor
+              -%}
+
+              {%- if option_index == '' -%}
+                {% render 'card-product',
+                  card_product: block.settings.product,
+                  media_aspect_ratio: 'adapt',
+                  show_secondary_image: block.settings.second_image,
+                  extend_height: true,
+                  placeholder_image: placeholder_image
+                %}
+              {%- else -%}
+                {% for variant in block.settings.product.variants %}
+                  {%- liquid
+                    assign variant_option = variant.options[option_index]
+                    continue_loop = false
+                    if variant_option contains 'CV_'
+                      assign continue_loop = true
+                    endif
+                  -%}
+                  {% if continue_loop %}
+                    {% continue %}
+                  {% endif %}
+                  {% render 'card-variant'
+                    , card_variant: variant
+                    , card_product: block.settings.product
+                    , variant_option: variant_option
+                    , media_aspect_ratio: 'adapt'
+                    , show_secondary_image: block.settings.second_image
+                    , extend_height: true
+                    , placeholder_image: placeholder_image
+                  %}
+                {% endfor %}
+              {%- endif -%}
             {%- when 'collection' -%}
               {%- assign placeholder_image = 'collection-apparel-' | append: placeholder_image_index -%}
               {% render 'card-collection',

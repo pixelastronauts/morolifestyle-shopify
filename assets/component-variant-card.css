@@ -1,0 +1,74 @@
+.variant-color-swatches {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+}
+
+.variant-swatch {
+  width: 4rem;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: #fff;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  border: 1px solid #fff;
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.5rem;
+}
+
+.variant-swatch.selected {
+  border-color: rgba(var(--color-foreground), 0.2);
+}
+
+.variant-color-swatches:hover .variant-swatch {
+  border-color: #fff!important;
+}
+
+.variant-color-swatches .variant-swatch:hover {
+  border-color: rgba(var(--color-foreground), 0.2)!important;
+}
+
+.variant-swatch-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.variant-swatch-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.2s ease-in-out;
+}
+
+.main-variant-image {
+  transition: all 0.3s ease-in-out;
+}
+
+.card__media-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.card__content--clickable {
+  position: relative;
+}
+
+.card__content--clickable .card__heading a:after {
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+} 
+
+.card__media .media img{
+  background: var(--gradient-background);
+}

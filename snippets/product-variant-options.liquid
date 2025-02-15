@@ -103,10 +103,10 @@
       {% endif %}>
     <label
       for="{{ input_id }}"
-      {% if option.name == 'Title' %}
+      {% if option.name == 'Color' %}
       class="variant-image-label"
       {% endif %}>
-      {%- if option.name == 'Title' and product.variants[forloop.index0].image -%}
+      {%- if option.name == 'Color' and product.variants[forloop.index0].image -%}
         <img
           src="{{ product.variants[forloop.index0].image | image_url: width: 50 }}"
           alt="{{ value | escape }}"

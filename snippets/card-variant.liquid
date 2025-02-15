@@ -1,0 +1,167 @@
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-variant-card.css' | asset_url | stylesheet_tag }}
+
+{%- if card_variant and card_variant != empty -%}
+  {%- liquid
+    assign ratio = 1
+    if card_variant.featured_media and media_aspect_ratio == 'portrait'
+      assign ratio = 0.8
+    elsif card_variant.featured_media and media_aspect_ratio == 'adapt'
+      assign ratio = card_variant.featured_media.aspect_ratio
+    endif
+    if ratio == 0 or ratio == null
+      assign ratio = 1
+    endif
+  -%}
+  <variant-card class="card-wrapper product-card-wrapper underline-links-hover">
+    <div class="card card--{{ settings.card_style }} {% if card_variant.featured_media %} card--media{% else %} card--text{% endif %} {% if settings.card_style == 'card' %} color-{{ settings.card_color_scheme }} gradient{% endif %} {% if extend_height %} card--extend-height{% endif %}" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+      <div class="card__inner {% if settings.card_style == 'standard' %}color-{{ settings.card_color_scheme }} gradient{% endif %}{% if card_variant.featured_media or settings.card_style == 'standard' %} ratio{% endif %}" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+        {%- if card_variant.featured_media -%}
+          <div class="card__media" data-variant-id="{{ card_variant.id }}">
+            <a href="{{ card_variant.url }}" class="card__media-link">
+              <div class="media media--transparent media--hover-effect">
+                <img
+                  srcset="
+                    {%- if card_variant.featured_media.width >= 165 -%}{{ card_variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if card_variant.featured_media.width >= 360 -%}{{ card_variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if card_variant.featured_media.width >= 533 -%}{{ card_variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                    {{ card_variant.featured_media | image_url }} {{ card_variant.featured_media.width }}w
+                  "
+                  src="{{ card_variant.featured_media | image_url: width: 533 }}"
+                  sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                  alt="{{ card_variant.featured_media.alt | escape }}"
+                  class="motion-reduce main-variant-image"
+                  {% unless lazy_load == false %}
+                  loading="lazy"
+                  {% endunless %}
+                  width="{{ card_variant.featured_media.width }}"
+                  height="{{ card_variant.featured_media.height }}"
+                  data-main-image
+                  data-variant-id="{{ card_variant.id }}">
+
+                {%- if card_product.media[1] != null and show_secondary_image -%}
+                  {%- if card_product.media[1].media_type == 'video' -%}
+                    {{ card_product.media[1] | video_tag: autoplay: false, loop: true, controls: false, muted: true, playsinline: true, class: 'media__video twcss-object-cover -twcss-z-10' }}
+                  {%- else -%}
+                    <img
+                      srcset="
+                        {%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
+                        {%- if card_product.media[1].width >= 360 -%}{{ card_product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
+                        {%- if card_product.media[1].width >= 533 -%}{{ card_product.media[1] | image_url: width: 533 }} 533w,{%- endif -%}
+                        {{ card_product.media[1] | image_url }} {{ card_product.media[1].width }}w
+                      "
+                      src="{{ card_product.media[1] | image_url: width: 533 }}"
+                      sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                      alt=""
+                      class="motion-reduce"
+                      loading="lazy"
+                      width="{{ card_product.media[1].width }}"
+                      height="{{ card_product.media[1].height }}">
+                  {%- endif -%}
+                {%- endif -%}
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
+
+        <div class="variant-color-swatches">
+          {%- comment -%}First show the current variant{%- endcomment -%}
+          {%- if card_variant.featured_media -%}
+            <div class="variant-swatch selected">
+              <a
+                href="{{ card_variant.url }}"
+                title="{{ card_variant.title }}"
+                class="variant-swatch-link"
+                data-variant-id="{{ card_variant.id }}"
+                data-variant-image="{{ card_variant.featured_media | image_url: width: 533 }}"
+                data-variant-srcset="{%- if card_variant.featured_media.width >= 165 -%}{{ card_variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%} {%- if card_variant.featured_media.width >= 360 -%}{{ card_variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%} {%- if card_variant.featured_media.width >= 533 -%}{{ card_variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%} {{ card_variant.featured_media | image_url }} {{ card_variant.featured_media.width }}w"
+                onclick="return false;">
+                <img
+                  src="{{ card_variant.featured_media | image_url: width: 50 }}"
+                  alt="{{ card_variant.title }}"
+                  width="30"
+                  height="30"
+                  loading="lazy"
+                  class="variant-swatch-image">
+              </a>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%}Then show all other variants{%- endcomment -%}
+          {%- for variant in card_product.variants -%}
+            {%- liquid
+              assign show_variant = true
+              if variant.featured_media == nil
+                assign show_variant = false
+              endif
+              if variant.option1 == nil or variant.option1 == ''
+                assign show_variant = false
+              endif
+              if variant.option1 contains 'CV_'
+                assign show_variant = false
+              endif
+              if variant == card_variant
+                assign show_variant = false
+              endif
+            -%}
+            {%- if show_variant -%}
+              <div class="variant-swatch">
+                <a
+                  href="{{ variant.url }}"
+                  title="{{ variant.title }}"
+                  class="variant-swatch-link"
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-image="{{ variant.featured_media | image_url: width: 533 }}"
+                  data-variant-srcset="{%- if variant.featured_media.width >= 165 -%}{{ variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%} {%- if variant.featured_media.width >= 360 -%}{{ variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%} {%- if variant.featured_media.width >= 533 -%}{{ variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%} {{ variant.featured_media | image_url }} {{ variant.featured_media.width }}w"
+                  onclick="return false;">
+                  <img
+                    src="{{ variant.featured_media | image_url: width: 50 }}"
+                    alt="{{ variant.title }}"
+                    width="30"
+                    height="30"
+                    loading="lazy"
+                    class="variant-swatch-image">
+                </a>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="card__content card__content--clickable">
+        <div class="card__information">
+          <h3 class="card__heading{% if card_variant.featured_media or settings.card_style == 'standard' %} h5{% endif %}">
+            <a href="{{ card_variant.url }}" class="full-unstyled-link">
+              {{ card_variant.product.title | escape }} - {{ variant_option }}
+            </a>
+          </h3>
+
+          <div class="card-information">
+            {%- if show_vendor -%}
+              <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
+              <div class="caption-with-letter-spacing light">{{ card_variant.vendor }}</div>
+            {%- endif -%}
+
+            {% render 'price'
+              , product: card_variant
+              , price_class: ''
+              , show_compare_at_price: true %}
+          </div>
+        </div>
+
+        <div class="card__badge {{ settings.badge_position }}">
+          {%- if card_variant.available == false -%}
+            <span class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}">
+              {{- 'products.product.sold_out' | t -}}
+            </span>
+          {%- elsif card_variant.compare_at_price > card_variant.price and card_variant.available -%}
+            <span class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}">
+              {{- 'products.product.on_sale' | t -}}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </variant-card>
+{%- endif -%}
