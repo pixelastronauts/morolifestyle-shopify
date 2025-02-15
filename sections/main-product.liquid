@@ -91,6 +91,15 @@
                 >
                   {{- block.settings.text -}}
                 </p>
+              {%- when 'alert' -%}
+                {% if block.settings.show_alert %}
+                  {% render 'alert-message',
+                    message: block.settings.message,
+                    type: block.settings.type,
+                    icon: block.settings.show_icon,
+                    dismissible: block.settings.dismissible
+                  %}
+                {% endif %}
               {%- when 'title' -%}
                 <div class="product__title" {{ block.shopify_attributes }}>
                   <h1>{{ product.title | escape }}</h1>
@@ -100,6 +109,15 @@
                     </h2>
                   </a>
                 </div>
+
+                {% if product.tags contains 'no-refund' %}
+                  {% render 'alert-message',
+                    message: 'This product is not refundable',
+                    type: 'warning',
+                    icon: true,
+                    dismissible: true
+                  %}
+                {% endif %}
               {%- when 'price' -%}
                 <div id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                   {%- render 'price',
@@ -809,6 +827,61 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "alert",
+      "name": "Alert Message",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_alert",
+          "label": "Show alert",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Alert type",
+          "options": [
+            {
+              "value": "success",
+              "label": "Success"
+            },
+            {
+              "value": "warning",
+              "label": "Warning"
+            },
+            {
+              "value": "error",
+              "label": "Error"
+            },
+            {
+              "value": "info",
+              "label": "Information"
+            }
+          ],
+          "default": "info"
+        },
+        {
+          "type": "text",
+          "id": "message",
+          "label": "Alert message",
+          "default": "Important information for this product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show icon",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "dismissible",
+          "label": "Allow dismissing alert",
+          "default": true
+        }
+      ]
     },
     {
       "type": "text",

@@ -1,0 +1,59 @@
+{% comment %}
+  Renders an alert message component.
+  Accepts:
+  - message: {String} The alert message to display
+  - type: {String} The type of alert (success, warning, error, info)
+  - icon: {Boolean} Whether to show an icon (optional)
+  - dismissible: {Boolean} Whether the alert can be dismissed (optional)
+
+  Usage:
+  {% render 'alert-message',
+    message: 'This product is not refundable',
+    type: 'warning',
+    icon: true,
+    dismissible: true
+  %}
+{% endcomment %}
+
+{{ 'component-alert-message.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign alert_class = 'alert-message'
+  case type
+    when 'success'
+      assign alert_class = alert_class | append: ' alert-message--success'
+    when 'warning'
+      assign alert_class = alert_class | append: ' alert-message--warning'
+    when 'error'
+      assign alert_class = alert_class | append: ' alert-message--error'
+    when 'info'
+      assign alert_class = alert_class | append: ' alert-message--info'
+  endcase
+-%}
+
+<alert-message class="{{ alert_class }}" role="alert">
+  <div class="alert-message__content">
+    {% if icon %}
+      <span class="alert-message__icon">
+        {% case type %}
+          {% when 'success' %}
+            {% render 'icon-success' %}
+          {% when 'warning' %}
+            {% render 'icon-warning' %}
+          {% when 'error' %}
+            {% render 'icon-error' %}
+          {% when 'info' %}
+            {% render 'icon-info' %}
+        {% endcase %}
+      </span>
+    {% endif %}
+
+    <p class="alert-message__text">{{ message }}</p>
+
+    {% if dismissible %}
+      <button class="alert-message__close" aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon-close' %}
+      </button>
+    {% endif %}
+  </div>
+</alert-message>
