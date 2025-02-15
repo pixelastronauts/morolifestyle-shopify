@@ -114,6 +114,16 @@
           "settings": {
             "share_label": "Delen"
           }
+        },
+        "alert_qRBgdK": {
+          "type": "alert",
+          "settings": {
+            "show_alert": true,
+            "type": "info",
+            "message": "Deze luxe designmat wordt volledig op maat gemaakt volgens jouw specificaties. Vanwege dit maatwerk kunnen wij geen retourzendingen accepteren. Controleer daarom zorgvuldig jouw bestelde afmetingen.",
+            "show_icon": true,
+            "dismissible": false
+          }
         }
       },
       "block_order": [
@@ -131,7 +141,8 @@
         "collapsible-row-2",
         "collapsible-row-3",
         "collapsible-row-1",
-        "share"
+        "share",
+        "alert_qRBgdK"
       ],
       "settings": {
         "enable_sticky_info": true,
