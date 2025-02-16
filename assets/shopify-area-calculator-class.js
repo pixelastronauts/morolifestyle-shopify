@@ -7,7 +7,7 @@ class AreaCalculator extends HTMLElement {
     super();
     this.basePrice = parseFloat(this.dataset.basePrice);
     this.productId = this.dataset.productId;
-    this.domain = this.dataset.domain || 'https://price-calculator.test';
+    this.domain = this.dataset.domain || 'https://dashboard.studiotapiz.nl';
     this.inputSelectors = {
       length: '[data-length-input]',
       width: '[data-width-input]',
