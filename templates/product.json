@@ -49,7 +49,19 @@
           "type": "area_calculator",
           "settings": {
             "show_area_calculator": true,
-            "show_area_calculator_price": true
+            "show_area_calculator_price": true,
+            "vertical_label": "Verticaal",
+            "horizontal_label": "Horizontaal",
+            "vertical_tooltip_title": "",
+            "vertical_tooltip_content": "",
+            "horizontal_tooltip_title": "",
+            "horizontal_tooltip_content": "",
+            "vertical_helper_text": "Min. 25cm & max. 250cm",
+            "horizontal_helper_text": "Min. 25cm & max. 180cm",
+            "min_vertical": 25,
+            "max_vertical": 250,
+            "min_horizontal": 25,
+            "max_horizontal": 180
           }
         },
         "price_GKYCKH": {
