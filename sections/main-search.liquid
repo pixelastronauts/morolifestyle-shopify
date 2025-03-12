@@ -301,12 +301,12 @@
                           {% for variant in item.variants %}
                             {%- liquid
                               assign variant_option = variant.options[option_index]
-                              continue_loop = false
+                              assign should_continue = false
                               if variant_option contains 'CV_'
-                                assign continue_loop = true
+                                assign should_continue = true
                               endif
                             -%}
-                            {% if continue_loop %}
+                            {% if should_continue %}
                               {% continue %}
                             {% endif %}
                             {% render 'card-variant'
