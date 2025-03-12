@@ -60,8 +60,10 @@
             "horizontal_helper_text": "Min. 25cm & max. 180cm",
             "min_vertical": 25,
             "max_vertical": 250,
+            "default_vertical": 60,
             "min_horizontal": 25,
-            "max_horizontal": 180
+            "max_horizontal": 180,
+            "default_horizontal": 90
           }
         },
         "price_GKYCKH": {
