@@ -59,7 +59,7 @@
                 data-length-input
                 min="{{ block.settings.min_vertical | default: 28 }}"
                 max="{{ block.settings.max_vertical | default: 250 }}"
-                value="{{ product.selected_or_first_available_variant.metafields.size.Verticaal }}"
+                value="{{ block.settings.default_vertical | default: block.settings.min_vertical | default: 28 }}"
                 placeholder="{{ block.settings.min_vertical | default: 28 }}"
                 class="twcss-w-full twcss-px-4 twcss-py-2 twcss-border twcss-border-gray-300 twcss-rounded-md focus:twcss-ring-1 focus-visible:twcss-outline-none focus:twcss-ring-tapiz-500 focus:twcss-border-tapiz-500 twcss-pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:twcss-appearance-none [&::-webkit-inner-spin-button]:twcss-appearance-none">
               <span class="twcss-absolute twcss-right-4 twcss-top-1/2 twcss-transform twcss--translate-y-1/2 twcss-text-gray-500">cm</span>
@@ -122,7 +122,7 @@
                 data-width-input
                 min="{{ block.settings.min_horizontal | default: 28 }}"
                 max="{{ block.settings.max_horizontal | default: 250 }}"
-                value="{{ product.selected_or_first_available_variant.metafields.size.Horizontaal }}"
+                value="{{ block.settings.default_horizontal | default: block.settings.min_horizontal | default: 28 }}"
                 placeholder="{{ block.settings.min_horizontal | default: 28 }}"
                 class="twcss-w-full twcss-px-4 twcss-py-2 twcss-border twcss-border-gray-300 twcss-rounded-md focus:twcss-ring-1 focus:twcss-ring-tapiz-500 focus-visible:twcss-outline-none focus:twcss-border-tapiz-500 twcss-pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:twcss-appearance-none [&::-webkit-inner-spin-button]:twcss-appearance-none">
               <span class="twcss-absolute twcss-right-4 twcss-top-1/2 twcss-transform twcss--translate-y-1/2 twcss-text-gray-500">cm</span>
