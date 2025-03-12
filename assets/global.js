@@ -1467,7 +1467,14 @@ class VariantSelects extends HTMLElement {
           volumePricingDestination.classList.remove('hidden');
         if (qtyRules) qtyRules.classList.remove('hidden');
 
-        if (source && destination) destination.innerHTML = source.innerHTML;
+        if (source && destination) {
+          // If there is no area calculator, render the price
+          const areaCalculator = document.querySelector('area-calculator');
+          if (!areaCalculator) {
+            destination.innerHTML = source.innerHTML;
+          }
+        }
+
         if (inventorySource && inventoryDestination)
           inventoryDestination.innerHTML = inventorySource.innerHTML;
         if (skuSource && skuDestination) {

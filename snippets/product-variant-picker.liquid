@@ -50,7 +50,7 @@
         <fieldset class="js product-form__input product-form__input--pill">
           <legend
             class="form__label"
-            {% if option.name == 'Title' %}
+            {% if option.name == 'Title' or option.name == 'Color' %}
             style="display: none;"
             {% endif %}>
             {{ option.name }}

@@ -9,104 +9,128 @@
       <div class="twcss-grid twcss-grid-cols-2 twcss-gap-4">
         <div class="twcss-flex twcss-flex-col twcss-gap-1">
           <div class="twcss-flex twcss-items-center twcss-gap-1">
-            <label class="twcss-text-base twcss-font-medium twcss-text-gray-700">Verticaal</label>
-            <div class="twcss-relative twcss-group">
-              <span class="twcss-cursor-help twcss-text-gray-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  class="twcss-size-4">
-                  <path
-                    fill-rule="evenodd"
-                    d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z"
-                    clip-rule="evenodd" />
-                </svg>
-              </span>
-              <div class="twcss-invisible group-hover:twcss-visible twcss-absolute twcss-left-0 twcss-top-6 twcss-z-10 twcss-w-48 twcss-rounded-md twcss-bg-black twcss-px-2 twcss-py-1 twcss-text-sm twcss-text-white">
-                <span class="twcss-flex twcss-items-center twcss-gap-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-move-horizontal twcss-rotate-90"><path d="m18 8 4 4-4 4" /><path d="M2 12h20" /><path d="m6 8-4 4 4 4" /></svg>
-                    Lengte
-                  </span>
-                Min: 28cm <br>
-                Max: 250cm
+            <label class="twcss-text-base twcss-font-medium twcss-text-gray-700">{{ block.settings.vertical_label }}</label>
+            {% if block.settings.vertical_tooltip_title != blank or block.settings.vertical_tooltip_content != blank %}
+              <div class="twcss-relative twcss-group">
+                <span class="twcss-cursor-help twcss-text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="twcss-size-4">
+                    <path
+                      fill-rule="evenodd"
+                      d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </span>
+                <div class="twcss-invisible group-hover:twcss-visible twcss-absolute twcss-left-0 twcss-top-6 twcss-z-10 twcss-w-48 twcss-rounded-md twcss-bg-black twcss-px-2 twcss-py-1 twcss-text-sm twcss-text-white">
+                  {% if block.settings.vertical_tooltip_title != blank %}
+                    <span class="twcss-flex twcss-items-center twcss-gap-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-move-horizontal twcss-rotate-90"><path d="m18 8 4 4-4 4" /><path d="M2 12h20" /><path d="m6 8-4 4 4 4" /></svg>
+                      {{ block.settings.vertical_tooltip_title }}
+                    </span>
+                  {% endif %}
+                  {% if block.settings.vertical_tooltip_content != blank %}
+                    <div class="twcss-mt-1">{{ block.settings.vertical_tooltip_content }}</div>
+                  {% endif %}
+                  <div class="twcss-mt-1">
+                    Min: {{ block.settings.min_vertical | default: 28 }}cm <br>
+                    Max: {{ block.settings.max_vertical | default: 250 }}cm
+                  </div>
+                </div>
               </div>
-            </div>
+            {% endif %}
           </div>
           <div class="twcss-flex twcss-flex-col twcss-gap-1">
             <div class="twcss-relative">
               <input
                 type="number"
                 data-length-input
-                min="28"
-                max="250"
+                min="{{ block.settings.min_vertical | default: 28 }}"
+                max="{{ block.settings.max_vertical | default: 250 }}"
                 value="{{ product.selected_or_first_available_variant.metafields.size.Verticaal }}"
-                placeholder="0"
+                placeholder="{{ block.settings.min_vertical | default: 28 }}"
                 class="twcss-w-full twcss-px-4 twcss-py-2 twcss-border twcss-border-gray-300 twcss-rounded-md focus:twcss-ring-1 focus-visible:twcss-outline-none focus:twcss-ring-tapiz-500 focus:twcss-border-tapiz-500 twcss-pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:twcss-appearance-none [&::-webkit-inner-spin-button]:twcss-appearance-none">
               <span class="twcss-absolute twcss-right-4 twcss-top-1/2 twcss-transform twcss--translate-y-1/2 twcss-text-gray-500">cm</span>
             </div>
             <span data-length-error class="twcss-text-red-500 twcss-text-sm"></span>
+            {% if block.settings.vertical_helper_text != blank %}
+              <span class="twcss-text-gray-500 twcss-text-sm">{{ block.settings.vertical_helper_text }}</span>
+            {% endif %}
           </div>
         </div>
         <div class="twcss-flex twcss-flex-col twcss-gap-1">
           <div class="twcss-flex twcss-items-center twcss-gap-1">
-            <label class="twcss-text-base twcss-font-medium twcss-text-gray-700">Horizontaal</label>
-            <div class="twcss-relative twcss-group">
-              <span class="twcss-cursor-help twcss-text-gray-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 16 16"
-                  fill="currentColor"
-                  class="twcss-size-4">
-                  <path
-                    fill-rule="evenodd"
-                    d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z"
-                    clip-rule="evenodd" />
-                </svg>
-              </span>
-              <div class="twcss-invisible group-hover:twcss-visible twcss-absolute twcss-left-0 twcss-top-6 twcss-z-10 twcss-w-48 twcss-rounded-md twcss-bg-black twcss-px-2 twcss-py-1 twcss-text-sm twcss-text-white">
-                <span class="twcss-flex twcss-items-center twcss-gap-1">
+            <label class="twcss-text-base twcss-font-medium twcss-text-gray-700">{{ block.settings.horizontal_label }}</label>
+            {% if block.settings.horizontal_tooltip_title != blank or block.settings.horizontal_tooltip_content != blank %}
+              <div class="twcss-relative twcss-group">
+                <span class="twcss-cursor-help twcss-text-gray-400">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-move-horizontal"><path d="m18 8 4 4-4 4" /><path d="M2 12h20" /><path d="m6 8-4 4 4 4" /></svg>
-                  Breedte
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="twcss-size-4">
+                    <path
+                      fill-rule="evenodd"
+                      d="M15 8A7 7 0 1 1 1 8a7 7 0 0 1 14 0Zm-6 3.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM7.293 5.293a1 1 0 1 1 .99 1.667c-.459.134-1.033.566-1.033 1.29v.25a.75.75 0 1 0 1.5 0v-.115a2.5 2.5 0 1 0-2.518-4.153.75.75 0 1 0 1.061 1.06Z"
+                      clip-rule="evenodd" />
+                  </svg>
                 </span>
-                Min: 28cm <br>
-                Max: 250cm
+                <div class="twcss-invisible group-hover:twcss-visible twcss-absolute twcss-left-0 twcss-top-6 twcss-z-10 twcss-w-48 twcss-rounded-md twcss-bg-black twcss-px-2 twcss-py-1 twcss-text-sm twcss-text-white">
+                  {% if block.settings.horizontal_tooltip_title != blank %}
+                    <span class="twcss-flex twcss-items-center twcss-gap-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-move-horizontal"><path d="m18 8 4 4-4 4" /><path d="M2 12h20" /><path d="m6 8-4 4 4 4" /></svg>
+                      {{ block.settings.horizontal_tooltip_title }}
+                    </span>
+                  {% endif %}
+                  {% if block.settings.horizontal_tooltip_content != blank %}
+                    <div class="twcss-mt-1">{{ block.settings.horizontal_tooltip_content }}</div>
+                  {% endif %}
+                  <div class="twcss-mt-1">
+                    Min: {{ block.settings.min_horizontal | default: 28 }}cm <br>
+                    Max: {{ block.settings.max_horizontal | default: 250 }}cm
+                  </div>
+                </div>
               </div>
-            </div>
+            {% endif %}
           </div>
           <div class="twcss-flex twcss-flex-col twcss-gap-1">
             <div class="twcss-relative">
               <input
                 type="number"
                 data-width-input
-                min="28"
-                max="250"
+                min="{{ block.settings.min_horizontal | default: 28 }}"
+                max="{{ block.settings.max_horizontal | default: 250 }}"
                 value="{{ product.selected_or_first_available_variant.metafields.size.Horizontaal }}"
-                placeholder="0"
+                placeholder="{{ block.settings.min_horizontal | default: 28 }}"
                 class="twcss-w-full twcss-px-4 twcss-py-2 twcss-border twcss-border-gray-300 twcss-rounded-md focus:twcss-ring-1 focus:twcss-ring-tapiz-500 focus-visible:twcss-outline-none focus:twcss-border-tapiz-500 twcss-pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:twcss-appearance-none [&::-webkit-inner-spin-button]:twcss-appearance-none">
               <span class="twcss-absolute twcss-right-4 twcss-top-1/2 twcss-transform twcss--translate-y-1/2 twcss-text-gray-500">cm</span>
             </div>
             <span data-width-error class="twcss-text-red-500 twcss-text-sm"></span>
+            {% if block.settings.horizontal_helper_text != blank %}
+              <span class="twcss-text-gray-500 twcss-text-sm">{{ block.settings.horizontal_helper_text }}</span>
+            {% endif %}
           </div>
         </div>
       </div>

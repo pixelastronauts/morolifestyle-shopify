@@ -49,32 +49,7 @@ class AreaCalculator extends HTMLElement {
 
   async initialize() {
     await this.fetchActiveFormula();
-    this.disableDefaultPriceUpdates();
     this.init();
-  }
-
-  disableDefaultPriceUpdates() {
-    // Find variant selectors
-    const variantSelectors = document.querySelectorAll('variant-selects, variant-radios');
-
-    variantSelectors.forEach(selector => {
-      // Listen for variant change events
-      selector.addEventListener('change', (event) => {
-        // Prevent default price updates by storing original prices
-        const priceElements = document.querySelectorAll('.price__regular .price-item--regular, .price__sale .price-item--sale');
-        priceElements.forEach(element => {
-          // Store original price if not already stored
-          let originalPrice = element.innerHTML;
-          if (!element.dataset.originalPrice) {
-            element.dataset.originalPrice = originalPrice;
-          }
-          // Restore original price
-          setTimeout(() => {
-            element.innerHTML = originalPrice;
-          }, 1000);
-        });
-      });
-    });
   }
 
   // Add debounce helper method
@@ -219,6 +194,11 @@ class AreaCalculator extends HTMLElement {
     this.originalPriceOutput = this.querySelector(this.outputSelectors.originalPrice);
     this.submitButton = document.querySelector('[type="submit"][name="add"]');
     this.totalPriceSpinner = this.querySelector(this.outputSelectors.totalPriceSpinner);
+
+    // Show the main price spinner if it exists
+    if (this.totalPriceSpinner) {
+      this.totalPriceSpinner.classList.remove('hidden');
+    }
 
     // Create error message elements
     this.createErrorElements();
@@ -693,28 +673,28 @@ class AreaCalculator extends HTMLElement {
     const totalPrice = this.calculatePrice(width, length) * quantity;
 
     // Update displays
-    this.updateDisplays(areaSqm, totalPrice);
+    this.updatePrice(totalPrice);
 
     // Update hidden inputs for cart
-    this.updateCartInputs(areaSqm, totalPrice);
+    this.updateCartInputs(totalPrice);
 
     // Dispatch custom event for other components
     this.dispatchEvent(
       new CustomEvent('price:update', {
         bubbles: true,
-        detail: { price: totalPrice, area: areaSqm }
+        detail: {
+          price: totalPrice,
+          length: length,
+          width: width
+        }
       })
     );
   }
 
-  updateDisplays(area, price) {
-    if (this.totalAreaOutput) {
-      this.totalAreaOutput.textContent = area.toFixed(2);
-    }
-
+  updatePrice(price) {
     // Update our custom price output
     if (this.totalPriceOutput) {
-      this.totalPriceSpinner.classList.add('hidden');
+      this.totalPriceSpinner?.classList.add('hidden');
       this.totalPriceOutput.innerHTML = this.formatMoney(price);
     }
 
@@ -722,10 +702,24 @@ class AreaCalculator extends HTMLElement {
     const defaultPriceElements = document.querySelectorAll('.price-item--regular, .price-item');
     defaultPriceElements.forEach(element => {
       element.innerHTML = this.formatMoney(price);
+      // Hide the spinner if it exists
+      const spinner = element.parentElement.querySelector('.loading__spinner');
+      if (spinner) {
+        spinner.classList.add('hidden');
+      }
     });
+
+    // Hide spinner in price container if it exists
+    const priceContainer = document.querySelector('.price.price--large');
+    if (priceContainer) {
+      const containerSpinner = priceContainer.querySelector('.loading__spinner');
+      if (containerSpinner) {
+        containerSpinner.classList.add('hidden');
+      }
+    }
   }
 
-  updateCartInputs(area, price) {
+  updateCartInputs(price) {
     if (this.variantInput) {
       this.variantInput.dataset.price = price;
     }
@@ -750,15 +744,14 @@ class AreaCalculator extends HTMLElement {
     this.updateLineItemProperties(properties);
 
     // Also save as cart attributes (optional, for additional data persistence)
-    this.updateCartAttributes(length, width, area);
+    this.updateCartAttributes(length, width);
   }
 
-  updateCartAttributes(length, width, area) {
+  updateCartAttributes(length, width) {
     // Create hidden inputs for cart attributes if they don't exist
     const cartAttributeFields = {
       'Length_cm': length,
-      'Width_cm': width,
-      'Total_Area_sqm': area.toFixed(2)
+      'Width_cm': width
     };
 
     Object.entries(cartAttributeFields).forEach(([key, value]) => {

@@ -73,11 +73,21 @@
           {%- endunless -%}
         {%- endif -%}
         <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+        <div class="loading__spinner hidden" data-total-price-spinner>
+          <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+          </svg>
+        </div>
         <span class="price-item price-item--regular">
           {{- 'products.product.volume_pricing.price_range' | t: minimum: money_price_min, maximum: money_price_max -}}
         </span>
       {%- else -%}
         <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.regular_price' | t }}</span>
+        <div class="loading__spinner hidden" data-total-price-spinner>
+          <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+          </svg>
+        </div>
         <span class="price-item price-item--regular">
           {{ money_price }}
         </span>
