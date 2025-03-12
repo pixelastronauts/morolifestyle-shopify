@@ -14,24 +14,32 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement_bY4GDm": {
-          "type": "announcement",
-          "settings": {
-            "text": "Bekijk onze nieuwste collectie",
-            "link": "shopify://collections"
-          }
-        },
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
             "text": "Gratis verzending op alle orders",
             "link": ""
           }
+        },
+        "announcement_fwQG3F": {
+          "type": "announcement",
+          "settings": {
+            "text": "Design matten op maat",
+            "link": ""
+          }
+        },
+        "announcement_bY4GDm": {
+          "type": "announcement",
+          "settings": {
+            "text": "Bekijk onze nieuwste collectie",
+            "link": "shopify://collections"
+          }
         }
       },
       "block_order": [
-        "announcement_bY4GDm",
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "announcement_fwQG3F",
+        "announcement_bY4GDm"
       ],
       "settings": {
         "color_scheme": "scheme-55641035-6d04-41ed-92cd-63bba70f1366",
