@@ -52,6 +52,10 @@
             "show_area_calculator_price": true
           }
         },
+        "price_GKYCKH": {
+          "type": "price",
+          "settings": {}
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -134,6 +138,7 @@
         "description",
         "quantity_selector",
         "area_calculator",
+        "price_GKYCKH",
         "buy_buttons",
         "inventory_qnngpg",
         "payment_methods_MGWLQp",
