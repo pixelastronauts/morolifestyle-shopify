@@ -1,0 +1,308 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "caption": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "square"
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "area_calculator": {
+          "type": "area_calculator",
+          "settings": {
+            "show_area_calculator": true,
+            "show_area_calculator_price": false,
+            "vertical_label": "Verticaal",
+            "horizontal_label": "Horizontaal",
+            "vertical_tooltip_title": "",
+            "vertical_tooltip_content": "",
+            "horizontal_tooltip_title": "",
+            "horizontal_tooltip_content": "",
+            "vertical_helper_text": "Min. 25cm & max. 250cm",
+            "horizontal_helper_text": "Min. 25cm & max. 180cm",
+            "min_vertical": 25,
+            "max_vertical": 250,
+            "min_horizontal": 25,
+            "max_horizontal": 180
+          }
+        },
+        "price_GKYCKH": {
+          "type": "price",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "alert_qRBgdK": {
+          "type": "alert",
+          "settings": {
+            "show_alert": true,
+            "type": "info",
+            "message": "Deze luxe designmat wordt volledig op maat gemaakt volgens jouw specificaties. Vanwege dit maatwerk kunnen wij geen retourzendingen accepteren. Controleer daarom zorgvuldig jouw bestelde afmetingen.",
+            "show_icon": true,
+            "dismissible": false
+          }
+        },
+        "inventory_qnngpg": {
+          "type": "inventory",
+          "disabled": true,
+          "settings": {
+            "text_style": "uppercase",
+            "inventory_threshold": 10,
+            "show_inventory_quantity": false
+          }
+        },
+        "payment_methods_MGWLQp": {
+          "type": "payment_methods",
+          "settings": {
+            "show_payment_methods": true
+          }
+        },
+        "collapsible-row-0": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Materialen",
+            "icon": "leather",
+            "content": "<ul><li>Hoogwaardige schoonloopmat van 2 kg/m² met duurzame zwarte TPE-backing van gerecycled materiaal</li><li>Perfecte combinatie van design en functionaliteit</li><li>Geschikt voor alle vloeren, inclusief vloerverwarming</li><li>Hoge antislip waarde voor optimale veiligheid</li><li>Speciaal ontwikkeld voor binnengebruik</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible-row-2": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Afmetingen",
+            "icon": "ruler",
+            "content": "<p>Houd bij het opmeten rekening met ongeveer 5mm speling aan alle kanten. Meet eerst zorgvuldig de beschikbare ruimte op. Wil je helemaal zeker zijn dat de mat past? Bestel dan de mat iets groter dan je nodig hebt. Je kunt hem namelijk heel eenvoudig op maat snijden met een stanleymes. Zo creëer je de perfecte pasvorm voor jouw ruimte.</p>",
+            "page": ""
+          }
+        },
+        "collapsible-row-3": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Verzorgingsinstructies",
+            "icon": "heart",
+            "content": "<ul><li>Regelmatig stofzuigen voor optimaal resultaat</li><li>Bij hardnekkige vlekken: handwas met mild reinigingsmiddel</li><li>Laat de mat altijd goed drogen voor gebruik</li></ul>",
+            "page": ""
+          }
+        },
+        "collapsible-row-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Verzenden & retourneren",
+            "icon": "truck",
+            "content": "<ul><li>Levertijd: 2-3 weken</li><li>Omdat alle matten op maat worden gemaakt, is <span style=\"text-decoration:underline\">retourneren helaas niet mogelijk</span></li><li>Voor een zorgeloze aankoop adviseren wij om vooraf contact op te nemen voor persoonlijk advies</li><li>Standaard gratis verzending binnen Nederland & België</li></ul>",
+            "page": ""
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Delen"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "caption",
+        "variant_picker",
+        "description",
+        "quantity_selector",
+        "area_calculator",
+        "price_GKYCKH",
+        "buy_buttons",
+        "alert_qRBgdK",
+        "inventory_qnngpg",
+        "payment_methods_MGWLQp",
+        "collapsible-row-0",
+        "collapsible-row-2",
+        "collapsible-row-3",
+        "collapsible-row-1",
+        "share"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "gallery_layout": "stacked",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": true,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "column-0": {
+          "type": "column",
+          "settings": {
+            "title": "Op maat gemaakt",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_kBxpB9": {
+          "type": "column",
+          "settings": {
+            "title": "gratis verzonden",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column-1": {
+          "type": "column",
+          "settings": {
+            "title": "Niet retourneerbaar",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_3JyNNy": {
+          "type": "column",
+          "settings": {
+            "title": "unieke designs",
+            "text": "",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column-0",
+        "column_kBxpB9",
+        "column-1",
+        "column_3JyNNy"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "blocks": {
+        "image-with-text-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "gEmaakt in Nederland",
+            "heading_size": "h1"
+          }
+        },
+        "image-with-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Onze design schoonloopmatten worden met zorg geproduceerd in Nederland. In ons gespecialiseerde productieatelier wordt elk ontwerp met precisie geprint en afgewerkt. Door lokaal te produceren garanderen we niet alleen de hoogste kwaliteit, maar houden we ook onze ecologische voetafdruk beperkt. Elke mat wordt voor verzending handmatig gecontroleerd.</p>",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "image-with-text-0",
+        "image-with-text-1"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/447403133_17863786392150547_8916469884258253891_n.jpg",
+        "height": "medium",
+        "desktop_image_width": "medium",
+        "layout": "text_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-55641035-6d04-41ed-92cd-63bba70f1366",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Ook leuk!",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "multicolumn",
+    "image-with-text",
+    "related-products"
+  ]
+}
