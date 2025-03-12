@@ -44,13 +44,13 @@
         "button"
       ],
       "settings": {
-        "image": "shopify://shop_images/447403133_17863786392150547_8916469884258253891_n.jpg",
-        "image_overlay_opacity": 60,
-        "image_height": "large",
+        "image": "shopify://shop_images/20250311-DSC06822_eaa422ca-f62f-4a1e-9d22-b7d6b28c9e72.jpg",
+        "image_overlay_opacity": 50,
+        "image_height": "medium",
         "desktop_content_position": "bottom-center",
         "show_text_box": false,
         "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-4",
         "image_behavior": "none",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
@@ -107,6 +107,7 @@
         "heading",
         "text"
       ],
+      "disabled": true,
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
@@ -144,6 +145,7 @@
         "product",
         "collection-1"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Multimedia collage",
         "heading_size": "h2",
@@ -157,6 +159,7 @@
     },
     "video": {
       "type": "video",
+      "disabled": true,
       "settings": {
         "heading": "",
         "heading_size": "h1",
@@ -205,6 +208,7 @@
         "column2",
         "column3"
       ],
+      "disabled": true,
       "settings": {
         "title": "",
         "heading_size": "h1",
