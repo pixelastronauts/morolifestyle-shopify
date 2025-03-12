@@ -65,59 +65,31 @@
           </div>
         {%- endif -%}
 
-        <div class="variant-color-swatches">
-          {%- comment -%}First show the current variant{%- endcomment -%}
-          {%- if card_variant.featured_media -%}
-            <div class="variant-swatch selected">
-              <a
-                href="{{ card_variant.url }}"
-                title="{{ card_variant.title }}"
-                class="variant-swatch-link"
-                data-variant-id="{{ card_variant.id }}"
-                data-variant-image="{{ card_variant.featured_media | image_url: width: 533 }}"
-                data-variant-srcset="{%- if card_variant.featured_media.width >= 165 -%}{{ card_variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%} {%- if card_variant.featured_media.width >= 360 -%}{{ card_variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%} {%- if card_variant.featured_media.width >= 533 -%}{{ card_variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%} {{ card_variant.featured_media | image_url }} {{ card_variant.featured_media.width }}w"
-                onclick="return false;">
-                <img
-                  src="{{ card_variant.featured_media | image_url: width: 50 }}"
-                  alt="{{ card_variant.title }}"
-                  width="30"
-                  height="30"
-                  loading="lazy"
-                  class="variant-swatch-image">
-              </a>
-            </div>
-          {%- endif -%}
+        {%- liquid
+          assign variant_count = 0
+          for variant in card_product.variants
+            unless variant.option1 contains 'CV_'
+              assign variant_count = variant_count | plus: 1
+            endunless
+          endfor
+        -%}
 
-          {%- comment -%}Then show all other variants{%- endcomment -%}
-          {%- for variant in card_product.variants -%}
-            {%- liquid
-              assign show_variant = true
-              if variant.featured_media == nil
-                assign show_variant = false
-              endif
-              if variant.option1 == nil or variant.option1 == ''
-                assign show_variant = false
-              endif
-              if variant.option1 contains 'CV_'
-                assign show_variant = false
-              endif
-              if variant == card_variant
-                assign show_variant = false
-              endif
-            -%}
-            {%- if show_variant -%}
-              <div class="variant-swatch">
+        {%- if variant_count > 1 -%}
+          <div class="variant-color-swatches">
+            {%- comment -%}First show the current variant{%- endcomment -%}
+            {%- if card_variant.featured_media -%}
+              <div class="variant-swatch selected">
                 <a
-                  href="{{ variant.url }}"
-                  title="{{ variant.title }}"
+                  href="{{ card_variant.url }}"
+                  title="{{ card_variant.title }}"
                   class="variant-swatch-link"
-                  data-variant-id="{{ variant.id }}"
-                  data-variant-image="{{ variant.featured_media | image_url: width: 533 }}"
-                  data-variant-srcset="{%- if variant.featured_media.width >= 165 -%}{{ variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%} {%- if variant.featured_media.width >= 360 -%}{{ variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%} {%- if variant.featured_media.width >= 533 -%}{{ variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%} {{ variant.featured_media | image_url }} {{ variant.featured_media.width }}w"
+                  data-variant-id="{{ card_variant.id }}"
+                  data-variant-image="{{ card_variant.featured_media | image_url: width: 533 }}"
+                  data-variant-srcset="{%- if card_variant.featured_media.width >= 165 -%}{{ card_variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%} {%- if card_variant.featured_media.width >= 360 -%}{{ card_variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%} {%- if card_variant.featured_media.width >= 533 -%}{{ card_variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%} {{ card_variant.featured_media | image_url }} {{ card_variant.featured_media.width }}w"
                   onclick="return false;">
                   <img
-                    src="{{ variant.featured_media | image_url: width: 50 }}"
-                    alt="{{ variant.title }}"
+                    src="{{ card_variant.featured_media | image_url: width: 50 }}"
+                    alt="{{ card_variant.title }}"
                     width="30"
                     height="30"
                     loading="lazy"
@@ -125,8 +97,47 @@
                 </a>
               </div>
             {%- endif -%}
-          {%- endfor -%}
-        </div>
+
+            {%- comment -%}Then show all other variants{%- endcomment -%}
+            {%- for variant in card_product.variants -%}
+              {%- liquid
+                assign show_variant = true
+                if variant.featured_media == nil
+                  assign show_variant = false
+                endif
+                if variant.option1 == nil or variant.option1 == ''
+                  assign show_variant = false
+                endif
+                if variant.option1 contains 'CV_'
+                  assign show_variant = false
+                endif
+                if variant == card_variant
+                  assign show_variant = false
+                endif
+              -%}
+              {%- if show_variant -%}
+                <div class="variant-swatch">
+                  <a
+                    href="{{ variant.url }}"
+                    title="{{ variant.title }}"
+                    class="variant-swatch-link"
+                    data-variant-id="{{ variant.id }}"
+                    data-variant-image="{{ variant.featured_media | image_url: width: 533 }}"
+                    data-variant-srcset="{%- if variant.featured_media.width >= 165 -%}{{ variant.featured_media | image_url: width: 165 }} 165w,{%- endif -%} {%- if variant.featured_media.width >= 360 -%}{{ variant.featured_media | image_url: width: 360 }} 360w,{%- endif -%} {%- if variant.featured_media.width >= 533 -%}{{ variant.featured_media | image_url: width: 533 }} 533w,{%- endif -%} {{ variant.featured_media | image_url }} {{ variant.featured_media.width }}w"
+                    onclick="return false;">
+                    <img
+                      src="{{ variant.featured_media | image_url: width: 50 }}"
+                      alt="{{ variant.title }}"
+                      width="30"
+                      height="30"
+                      loading="lazy"
+                      class="variant-swatch-image">
+                  </a>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
 
       <div class="card__content card__content--clickable">

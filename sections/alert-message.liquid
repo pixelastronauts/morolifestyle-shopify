@@ -1,0 +1,66 @@
+{% schema %}
+  {
+    "name": "Alert Message",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "message",
+        "label": "Message",
+        "default": "Your alert message here"
+      },
+      {
+        "type": "select",
+        "id": "type",
+        "label": "Alert Type",
+        "options": [
+          {
+            "value": "success",
+            "label": "Success"
+          },
+          {
+            "value": "warning",
+            "label": "Warning"
+          },
+          {
+            "value": "error",
+            "label": "Error"
+          },
+          {
+            "value": "info",
+            "label": "Info"
+          }
+        ],
+        "default": "info"
+      },
+      {
+        "type": "checkbox",
+        "id": "icon",
+        "label": "Show Icon",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "dismissible",
+        "label": "Allow Dismissing",
+        "default": true
+      }
+    ],
+    "presets": [
+      {
+        "name": "Alert Message",
+        "category": "Promotional"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="page-width">
+  {% render 'alert-message'
+    , message: section.settings.message
+    , type: section.settings.type
+    , icon: section.settings.icon
+    , dismissible: section.settings.dismissible
+  %}
+</div>
