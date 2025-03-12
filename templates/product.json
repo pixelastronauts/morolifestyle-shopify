@@ -49,7 +49,7 @@
           "type": "area_calculator",
           "settings": {
             "show_area_calculator": true,
-            "show_area_calculator_price": true,
+            "show_area_calculator_price": false,
             "vertical_label": "Verticaal",
             "horizontal_label": "Horizontaal",
             "vertical_tooltip_title": "",
@@ -75,8 +75,19 @@
             "show_gift_card_recipient": true
           }
         },
+        "alert_qRBgdK": {
+          "type": "alert",
+          "settings": {
+            "show_alert": true,
+            "type": "info",
+            "message": "Deze luxe designmat wordt volledig op maat gemaakt volgens jouw specificaties. Vanwege dit maatwerk kunnen wij geen retourzendingen accepteren. Controleer daarom zorgvuldig jouw bestelde afmetingen.",
+            "show_icon": true,
+            "dismissible": false
+          }
+        },
         "inventory_qnngpg": {
           "type": "inventory",
+          "disabled": true,
           "settings": {
             "text_style": "uppercase",
             "inventory_threshold": 10,
@@ -130,16 +141,6 @@
           "settings": {
             "share_label": "Delen"
           }
-        },
-        "alert_qRBgdK": {
-          "type": "alert",
-          "settings": {
-            "show_alert": true,
-            "type": "info",
-            "message": "Deze luxe designmat wordt volledig op maat gemaakt volgens jouw specificaties. Vanwege dit maatwerk kunnen wij geen retourzendingen accepteren. Controleer daarom zorgvuldig jouw bestelde afmetingen.",
-            "show_icon": true,
-            "dismissible": false
-          }
         }
       },
       "block_order": [
@@ -152,14 +153,14 @@
         "area_calculator",
         "price_GKYCKH",
         "buy_buttons",
+        "alert_qRBgdK",
         "inventory_qnngpg",
         "payment_methods_MGWLQp",
         "collapsible-row-0",
         "collapsible-row-2",
         "collapsible-row-3",
         "collapsible-row-1",
-        "share",
-        "alert_qRBgdK"
+        "share"
       ],
       "settings": {
         "enable_sticky_info": true,
