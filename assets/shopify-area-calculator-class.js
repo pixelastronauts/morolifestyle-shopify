@@ -58,14 +58,11 @@ class AreaCalculator extends HTMLElement {
     const variantSelectors = document.querySelectorAll('variant-selects, variant-radios');
 
     variantSelectors.forEach(selector => {
-      console.log('selector', selector);
       // Listen for variant change events
       selector.addEventListener('change', (event) => {
-        console.log('change', event);
         // Prevent default price updates by storing original prices
         const priceElements = document.querySelectorAll('.price__regular .price-item--regular, .price__sale .price-item--sale');
         priceElements.forEach(element => {
-          console.log('element', element);
           // Store original price if not already stored
           let originalPrice = element.innerHTML;
           if (!element.dataset.originalPrice) {
@@ -74,7 +71,6 @@ class AreaCalculator extends HTMLElement {
           // Restore original price
           setTimeout(() => {
             element.innerHTML = originalPrice;
-            console.log('set timeout element', element);
           }, 1000);
         });
       });
@@ -94,12 +90,12 @@ class AreaCalculator extends HTMLElement {
       this.activeFormula = formulas.find(f => f.is_active) || formulas[0];
 
       // Log the formula details for debugging
-      console.log('Active Formula:', {
-        name: this.activeFormula.name,
-        parameters: this.activeFormula.formula_parameters,
-        ranges: this.activeFormula.value_ranges,
-        explanation: this.activeFormula.formula_explanation
-      });
+      // console.log('Active Formula:', {
+      //   name: this.activeFormula.name,
+      //   parameters: this.activeFormula.formula_parameters,
+      //   ranges: this.activeFormula.value_ranges,
+      //   explanation: this.activeFormula.formula_explanation
+      // });
     } catch (error) {
       console.error('Error fetching price formula:', error);
     }
@@ -476,13 +472,11 @@ class AreaCalculator extends HTMLElement {
       }
 
       // Update cart drawer if it exists
-      const cartDrawer = document.querySelector('cart-drawer');
+      const cartDrawer = document.querySelector('body>cart-drawer');
       if (cartDrawer) {
-        // Get sections to render
+        // Then fetch sections in the background
         const sections = cartDrawer.getSectionsToRender().map((section) => section.id);
-
-        // Fetch cart sections
-        const sectionsResponse = await fetch(`${window.Shopify.routes.root}cart/update.js`, {
+        fetch(`${window.Shopify.routes.root}cart/update.js`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -494,24 +488,168 @@ class AreaCalculator extends HTMLElement {
             sections: sections,
             sections_url: window.location.pathname
           })
+        }).then(async (sectionsResponse) => {
+          if (sectionsResponse.ok) {
+            const cartData = await sectionsResponse.json();
+
+            // Check if we have valid sections data
+            if (cartData && cartData.sections && cartData.sections['cart-drawer']) {
+              cartDrawer.renderContents(cartData);
+
+              console.log('cartData', cartData);
+              // Now update the cart items with correct prices after content is rendered
+              const cartItems = cartDrawer.querySelectorAll('.cart-item');
+              cartItems.forEach((item, index) => {
+                const matchingCartItem = cartData.items[index];
+                if (!matchingCartItem) return;
+
+                // Update cart count bubble
+                const cartCountBubble = document.querySelector('.cart-count-bubble');
+                if (cartCountBubble) {
+                  const countSpan = cartCountBubble.querySelector('span[aria-hidden="true"]');
+                  const visibleSpan = cartCountBubble.querySelector('.visually-hidden');
+                  if (countSpan) countSpan.textContent = cartData.item_count;
+                  if (visibleSpan) visibleSpan.textContent = `${cartData.item_count} artikelen`;
+                }
+
+                // Update price
+                const priceElement = item.querySelector('.price.price--end');
+                if (priceElement) {
+                  const formattedPrice = new Intl.NumberFormat('nl-NL', {
+                    style: 'currency',
+                    currency: cartData.currency
+                  }).format(matchingCartItem.price / 100);
+                  priceElement.textContent = formattedPrice;
+                }
+
+                // Update product option price
+                const productOptionPrice = item.querySelector('.cart-item__details .product-option');
+                if (productOptionPrice) {
+                  const formattedPrice = new Intl.NumberFormat('nl-NL', {
+                    style: 'currency',
+                    currency: cartData.currency
+                  }).format(matchingCartItem.price / 100);
+                  productOptionPrice.textContent = formattedPrice;
+                }
+
+                // Update product name and link
+                const nameLink = item.querySelector('.cart-item__name');
+                if (nameLink) {
+                  nameLink.textContent = matchingCartItem.product_title;
+                  nameLink.href = matchingCartItem.url;
+                }
+
+                // Update image
+                const imageContainer = item.querySelector('.cart-item__media');
+                if (imageContainer && matchingCartItem.featured_image) {
+                  const existingLink = imageContainer.querySelector('.cart-item__link');
+                  if (!existingLink) {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = matchingCartItem.url;
+                    linkElement.className = 'cart-item__link';
+                    linkElement.setAttribute('tabindex', '-1');
+                    linkElement.setAttribute('aria-hidden', 'true');
+
+                    const imgElement = document.createElement('img');
+                    imgElement.className = 'cart-item__image';
+                    imgElement.src = matchingCartItem.featured_image.url;
+                    imgElement.alt = matchingCartItem.featured_image.alt || matchingCartItem.product_title;
+                    imgElement.loading = 'lazy';
+                    imgElement.width = 150;
+                    imgElement.height = 150;
+
+                    linkElement.appendChild(imgElement);
+                    imageContainer.appendChild(linkElement);
+                  }
+                }
+              });
+
+              // Update cart total
+              const totalElement = cartDrawer.querySelector('.totals__total-value');
+              if (totalElement) {
+                console.log('cartData.items_subtotal_price', cartData);
+                console.log('cartData.items_subtotal_price', cartData.items_subtotal_price);
+                const formattedTotal = new Intl.NumberFormat('nl-NL', {
+                  style: 'currency',
+                  currency: cartData.currency
+                }).format(cartData.items_subtotal_price / 100);
+                console.log('formattedTotal', formattedTotal);
+                totalElement.textContent = `${formattedTotal}`;
+              }
+
+              // Dispatch refresh event after updates
+              const refreshEvent = new CustomEvent('cart:refresh', {
+                bubbles: true,
+                detail: { cart: cartData }
+              });
+              document.dispatchEvent(refreshEvent);
+
+              // Force the drawer to open
+              cartDrawer.classList.remove('is-empty');
+              cartDrawer.open();
+
+              this.removePollingMessage();
+
+              // Now poll for non-zero prices in sections and update when ready
+              const updatedCartData = await this.pollForNonZeroPrices(sections, cartData);
+              if (updatedCartData && updatedCartData.sections && updatedCartData.sections['cart-drawer']) {
+                // Create a temporary div to parse the HTML and check prices
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = updatedCartData.sections['cart-drawer'];
+
+                // Check if any price is zero
+                const hasZeroPrices = Array.from(tempDiv.querySelectorAll('.price.price--end, .cart-item__details .product-option')).some(price => {
+                  const priceText = price.textContent.trim();
+                  return priceText === '€0,00' || priceText === '€ 0,00';
+                });
+
+                // Only update if we have non-zero prices
+                if (!hasZeroPrices) {
+                  cartDrawer.renderContents(updatedCartData);
+
+                  // Re-apply our price updates to ensure consistency
+                  const cartItems = cartDrawer.querySelectorAll('.cart-item');
+                  cartItems.forEach((item, index) => {
+                    const matchingCartItem = cartData.items[index];
+                    if (!matchingCartItem) return;
+
+                    // Update price
+                    const priceElement = item.querySelector('.price.price--end');
+                    if (priceElement) {
+                      const formattedPrice = new Intl.NumberFormat('nl-NL', {
+                        style: 'currency',
+                        currency: cartData.currency
+                      }).format(matchingCartItem.price / 100);
+                      priceElement.textContent = formattedPrice;
+                    }
+
+                    // Update product option price
+                    const productOptionPrice = item.querySelector('.cart-item__details .product-option');
+                    if (productOptionPrice) {
+                      const formattedPrice = new Intl.NumberFormat('nl-NL', {
+                        style: 'currency',
+                        currency: cartData.currency
+                      }).format(matchingCartItem.price / 100);
+                      productOptionPrice.textContent = formattedPrice;
+                    }
+                  });
+
+                  // Update cart total one final time
+                  const totalElement = cartDrawer.querySelector('.totals__total-value');
+                  if (totalElement) {
+                    const formattedTotal = new Intl.NumberFormat('nl-NL', {
+                      style: 'currency',
+                      currency: cartData.currency
+                    }).format(cartData.items_subtotal_price / 100);
+                    totalElement.textContent = `${formattedTotal}`;
+                  }
+                }
+              }
+            }
+          }
+        }).catch(error => {
+          console.error('Error updating cart sections:', error);
         });
-
-        if (sectionsResponse.ok) {
-          const sectionsData = await sectionsResponse.json();
-
-          // Try to get non-zero prices with polling
-          const updatedSectionsData = await this.pollForNonZeroPrices(sections, sectionsData);
-
-          // Remove any existing message
-          this.removePollingMessage();
-
-          // Render the final content
-          cartDrawer.renderContents(updatedSectionsData);
-
-          // Ensure drawer is opened and empty state is removed
-          cartDrawer.classList.remove('is-empty');
-          cartDrawer.open();
-        }
       }
 
       // Dispatch event for successful add to cart
@@ -706,18 +844,8 @@ class AreaCalculator extends HTMLElement {
     while (currentAttempt < maxAttempts) {
       console.log(`\nAttempt ${currentAttempt + 1} of ${maxAttempts}`);
 
-      // Show message after 4th attempt
-      if (currentAttempt === 1) {
-        this.createPollingMessage('Even geduld, we zijn jouw product op maat aan het berekenen...');
-      }
-
-      if (currentAttempt === 2) {
-        this.createPollingMessage('We zijn bijna klaar met het berekenen van jouw product op maat...');
-      }
-
-      if (currentAttempt === 3) {
-        this.createPollingMessage('Nog heel even geduld, we zijn bijna klaar...');
-      }
+      // Delay for 1 second so the animation is visible
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Check if current data has zero prices
       const cartDrawerHtml = currentData?.sections?.['cart-drawer'] || currentData['cart-drawer'];
