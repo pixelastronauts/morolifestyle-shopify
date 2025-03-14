@@ -50,8 +50,8 @@
           "settings": {
             "show_area_calculator": true,
             "show_area_calculator_price": false,
-            "vertical_label": "Verticaal",
-            "horizontal_label": "Horizontaal",
+            "vertical_label": "Lengte",
+            "horizontal_label": "Breedte",
             "vertical_tooltip_title": "",
             "vertical_tooltip_content": "",
             "horizontal_tooltip_title": "",
@@ -60,8 +60,10 @@
             "horizontal_helper_text": "Min. 25cm & max. 180cm",
             "min_vertical": 25,
             "max_vertical": 250,
+            "default_vertical": 60,
             "min_horizontal": 25,
-            "max_horizontal": 180
+            "max_horizontal": 180,
+            "default_horizontal": 90
           }
         },
         "price_GKYCKH": {
@@ -98,15 +100,6 @@
           "type": "payment_methods",
           "settings": {
             "show_payment_methods": true
-          }
-        },
-        "collapsible-row-0": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Materialen",
-            "icon": "leather",
-            "content": "<ul><li>Hoogwaardige schoonloopmat van 2 kg/m² met duurzame zwarte TPE-backing van gerecycled materiaal</li><li>Perfecte combinatie van design en functionaliteit</li><li>Geschikt voor alle vloeren, inclusief vloerverwarming</li><li>Hoge antislip waarde voor optimale veiligheid</li><li>Speciaal ontwikkeld voor binnengebruik</li></ul>",
-            "page": ""
           }
         },
         "collapsible-row-2": {
@@ -156,7 +149,6 @@
         "alert_qRBgdK",
         "inventory_qnngpg",
         "payment_methods_MGWLQp",
-        "collapsible-row-0",
         "collapsible-row-2",
         "collapsible-row-3",
         "collapsible-row-1",
@@ -265,7 +257,7 @@
         "image-with-text-1"
       ],
       "settings": {
-        "image": "shopify://shop_images/447403133_17863786392150547_8916469884258253891_n.jpg",
+        "image": "shopify://shop_images/20250311-DSC06822.jpg",
         "height": "medium",
         "desktop_image_width": "medium",
         "layout": "text_first",
