@@ -50,6 +50,7 @@
   {% endif %}
   aria-label="{{ 'products.product.media.gallery_viewer' | t }}"
   data-desktop-layout="{{ section.settings.gallery_layout }}"
+  {% if section.settings.enable_video_autoplay %}data-autoplay="true"{% endif %}
 >
   <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
   <slider-component id="GalleryViewer-{{ section.id }}" class="slider-mobile-gutter">
@@ -81,7 +82,8 @@
             media_width: media_width,
             media_fit: section.settings.media_fit,
             constrain_to_viewport: section.settings.constrain_to_viewport,
-            lazy_load: false
+            lazy_load: false,
+            enable_video_autoplay: section.settings.enable_video_autoplay
           %}
         </li>
       {%- endif -%}
@@ -119,7 +121,8 @@
               media_width: media_width,
               media_fit: section.settings.media_fit,
               constrain_to_viewport: section.settings.constrain_to_viewport,
-              lazy_load: lazy_load
+              lazy_load: lazy_load,
+              enable_video_autoplay: section.settings.enable_video_autoplay
             %}
           </li>
         {%- endunless -%}

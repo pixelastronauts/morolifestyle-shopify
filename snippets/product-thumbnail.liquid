@@ -158,5 +158,127 @@
     {%- else -%}
       </deferred-media>
     {%- endif -%}
+  {%- else -%}
+    {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+      {%- if media.media_type == 'video' -%}
+        {%- if enable_video_autoplay -%}
+          <div class="media{% if media_fit == 'cover' %} media-fit-cover{% endif %}" style="--ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%">
+            {{
+              media
+              | video_tag:
+                image_size: "1024x",
+                autoplay: true,
+                loop: loop,
+                controls: true,
+                muted: true,
+                playsinline: true,
+                preload: "auto"
+            }}
+          </div>
+        {%- else -%}
+          <deferred-media class="deferred-media media{% if media_fit == 'cover' %} media-fit-cover{% endif %}" style="--ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%">
+            <button
+              id="Deferred-Poster-Modal-{{ media.id }}"
+              class="deferred-media__poster"
+              type="button"
+              aria-label="{{ 'products.product.video.load_video' | t: index: position }}"
+              aria-describedby="Title-{{ media.id }}"
+            >
+              <span class="deferred-media__poster-button motion-reduce">
+                {%- render 'icon-play' -%}
+              </span>
+
+              {{
+                media.preview_image
+                | image_url: width: 1946
+                | image_tag:
+                  loading: lazy_load,
+                  sizes: sizes,
+                  widths: '273, 550, 750, 1100, 1500, 1946',
+                  alt: media.preview_image.alt | escape
+              }}
+            </button>
+            <template>
+              {{
+                media
+                | video_tag:
+                  image_size: "1024x",
+                  autoplay: true,
+                  loop: loop,
+                  controls: true,
+                  muted: false,
+                  preload: "none"
+              }}
+            </template>
+          </deferred-media>
+        {%- endif -%}
+      {%- else -%}
+        {%- if enable_video_autoplay -%}
+          <div class="media{% if media_fit == 'cover' %} media-fit-cover{% endif %}" style="--ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%">
+            {%- if media.host == 'youtube' -%}
+              <iframe
+                src="https://www.youtube.com/embed/{{ media.external_id }}?autoplay=1&mute=1{% if loop %}&playlist={{ media.external_id }}&loop=1{% endif %}&enablejsapi=1"
+                class="js-youtube"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                title="{{ media.alt | escape }}"
+              ></iframe>
+            {%- else -%}
+              <iframe
+                src="https://player.vimeo.com/video/{{ media.external_id }}?autoplay=1&muted=1{% if loop %}&loop=1{% endif %}&color=ffffff"
+                class="js-vimeo"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                title="{{ media.alt | escape }}"
+              ></iframe>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <deferred-media class="deferred-media media{% if media_fit == 'cover' %} media-fit-cover{% endif %}" style="--ratio-percent: {{ 1 | divided_by: media.preview_image.aspect_ratio | times: 100 }}%">
+            <button
+              id="Deferred-Poster-Modal-{{ media.id }}"
+              class="deferred-media__poster"
+              type="button"
+              aria-label="{{ 'products.product.video.load_video' | t: index: position }}"
+              aria-describedby="Title-{{ media.id }}"
+            >
+              <span class="deferred-media__poster-button motion-reduce">
+                {%- render 'icon-play' -%}
+              </span>
+
+              {{
+                media.preview_image
+                | image_url: width: 1946
+                | image_tag:
+                  loading: lazy_load,
+                  sizes: sizes,
+                  widths: '273, 550, 750, 1100, 1500, 1946',
+                  alt: media.preview_image.alt | escape
+              }}
+            </button>
+            <template>
+              {%- if media.host == 'youtube' -%}
+                <iframe
+                  src="https://www.youtube.com/embed/{{ media.external_id }}?autoplay=1{% if loop %}&playlist={{ media.external_id }}&loop=1{% endif %}&enablejsapi=1"
+                  class="js-youtube"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  title="{{ media.alt | escape }}"
+                ></iframe>
+              {%- else -%}
+                <iframe
+                  src="https://player.vimeo.com/video/{{ media.external_id }}?autoplay=1{% if loop %}&loop=1{% endif %}&color=ffffff"
+                  class="js-vimeo"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  title="{{ media.alt | escape }}"
+                ></iframe>
+              {%- endif -%}
+            </template>
+          </deferred-media>
+        {%- endif -%}
+      {%- endif -%}
+    {%- else -%}
+    {%- endif -%}
   {%- endif -%}
 </div>
